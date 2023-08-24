@@ -21,27 +21,28 @@ void ConvertToWords (int num, Dictionary<int, string> numtoword) {
    int quot = 0;
    string result = "";
    while (num > 0) {
-      if (Convert.ToString (num).Length == 8 || Convert.ToString (num).Length == 9) {
+      string Words = Convert.ToString (num);
+      if (Words.Length == 8 || Words.Length == 9) {
          quot = num / 10000000;
          result += (Convert.ToString (quot).Length == 2 && quot > 20 ? numtoword[quot - (quot % 10)] + " " + numtoword[quot % 10] : numtoword[quot]) + " Crore ";
          num = num % 10000000;
       }
-      if (Convert.ToString (num).Length == 6 || Convert.ToString (num).Length == 7) {
+      if (Words.Length == 6 || Words.Length == 7) {
          quot = num / 100000;
          result += (Convert.ToString (quot).Length == 2 && quot > 20 ? numtoword[quot - (quot % 10)] + " " + numtoword[quot % 10] : numtoword[quot]) + " Lakhs ";
          num = num % 100000;
       }
-      if (Convert.ToString (num).Length == 5 || Convert.ToString (num).Length == 4) {
+      if (Words.Length == 5 || Words.Length == 4) {
          quot = num / 1000;
          result += (Convert.ToString (quot).Length == 2 && quot > 20 ? numtoword[quot - (quot % 10)] + " " + numtoword[quot % 10] : numtoword[quot]) + " Thousand ";
          num = num % 1000;
       }
-      if (Convert.ToString (num).Length == 3) {
+      if (Words.Length == 3) {
          quot = num / 100;
          result += numtoword[quot] + " Hundred and ";
          num = num % 100;
       }
-      if (Convert.ToString (num).Length == 2) {
+      if (Words.Length == 2) {
          if (Convert.ToString (num).Length == 2 && num > 20) {
             result += numtoword[num - (num % 10)] + " " + numtoword[num % 10];
             num = num / 10;
@@ -51,7 +52,7 @@ void ConvertToWords (int num, Dictionary<int, string> numtoword) {
             break;
          }
       }
-      if (Convert.ToString (num).Length == 1) {
+      if (Words.Length == 1) {
          result += Convert.ToString (num).Length == 2 && num > 20 ? numtoword[num - (num % 10)] + numtoword[num % 10] : numtoword[num];
          num = num / 10;
       }
@@ -66,14 +67,15 @@ void ConvertToRoman (int num) {
    string result = "";
    int val = 0;
    while (num > 0) {
-      if (Convert.ToString (num).Length == 4)
+      string Roman = Convert.ToString (num);
+      if (Roman.Length == 4)
          result += numtoroman[num];
       if (Convert.ToString (num).Length == 3) {
          val = num - (num % 100);
          result += numtoroman[val];
          num = num % 100;
       }
-      if (Convert.ToString (num).Length == 2) {
+      if (Roman.Length == 2) {
          if (num > 10 && num < 40) {
             val = num / 10;
             result += string.Concat (Enumerable.Repeat ("X", val)) + numtoroman[num % 10];
@@ -106,4 +108,3 @@ void ConvertToRoman (int num) {
    }
    Console.WriteLine (result);
 }
-
