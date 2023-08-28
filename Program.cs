@@ -1,6 +1,8 @@
 ﻿Console.WriteLine ("Enter a text: ");
-string name = Console.ReadLine ();
-var origi = name.ToLower ().Replace (" ", "").ToCharArray ();
-var rev = name.ToLower ().Replace (" ", "").ToCharArray ();
-Array.Reverse (rev);
-if (Enumerable.SequenceEqual (origi, rev)) Console.WriteLine ("It is a palindrome"); else Console.WriteLine ("It is not a palindrome");
+string name = Console.ReadLine () ?? "";
+name=name.ToLower ().Replace (" ", "");
+string reverse = "";
+for (int i = name.Length - 1; i >= 0; i--) 
+   reverse += name[i];
+string result = "It is a "+ (name==reverse ? "": "not a") + " palindrome";
+Console.WriteLine (result);
