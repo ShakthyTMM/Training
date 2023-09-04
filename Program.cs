@@ -13,8 +13,6 @@ void Permute (string s, string answer) {
       WriteLine (answer + "  ");
       return;
    }
-   for (int i = 0; i < s.Length; i++) {
-      char ch = s[i];
-      Permute (s[..i] + s[(i + 1)..], answer + ch);
-   }
+   for (int i = 0; i < s.Length; i++)
+      Permute (s[..i] + s[(i + 1)..], answer + s[i]);
 }
