@@ -1,21 +1,20 @@
 ﻿// Program to Print String Permutations
+using static System.Console;
 string answer = "";
-Console.Write ("Enter the string : ");
-string s = Console.ReadLine () ?? "";
+Write ("Enter the string : ");
+string s = ReadLine () ?? "";
 if (s.Length > 0 && s.All (Char.IsLetter)) {
-   Console.WriteLine ("\nAll possible strings are : ");
-   permute (s, answer);
-} else Console.WriteLine ("Enter Valid Input");
-void permute (String s, String answer) {
+   WriteLine ("\nAll Possible Strings are : ");
+   Permute (s, answer);
+} else WriteLine ("Enter Valid Input");
+
+void Permute (string s, string answer) {
    if (s.Length == 0) {
-      Console.WriteLine (answer + "  ");
+      WriteLine (answer + "  ");
       return;
    }
    for (int i = 0; i < s.Length; i++) {
       char ch = s[i];
-      String left_substr = s.Substring (0, i);
-      String right_substr = s.Substring (i + 1);
-      String rest = left_substr + right_substr;
-      permute (rest, answer + ch);
+      Permute (s[..i] + s[(i + 1)..], answer + ch);
    }
 }
