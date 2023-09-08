@@ -1,5 +1,6 @@
-﻿Console.WriteLine ("Enter no of lines: ");
-int n = int.Parse (Console.ReadLine ());
+﻿//Program to Print Diamond
+Console.WriteLine ("Enter no of lines: ");
+int n = int.Parse (Console.ReadLine ()?? "");
 int space = n;
 for (int i = 1; i <= (n * 2) + 1; i += 2) {
    Console.WriteLine (string.Concat (Enumerable.Repeat (" ", space)) + string.Concat (Enumerable.Repeat ("*", i)));
