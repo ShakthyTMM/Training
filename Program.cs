@@ -1,22 +1,22 @@
-﻿while (true) {
+﻿// Program to Guess a number 
+using static System.Console;
+while (true) {
    int guess = new Random ().Next (1, 100);
    string userguess;
    int val = 0, count = 0;
-   Console.WriteLine ("Guess a number between 1 and 100");
+   WriteLine ("Guess a number between 1 and 100");
    while (val != guess) {
-      userguess = Console.ReadLine ();
+      userguess = ReadLine ()?? "";
       if ((!int.TryParse (userguess, out val) || val < 1 || val > 100)) {
-         Console.WriteLine ("Invalid Number");
+         WriteLine ("Invalid Number");
          continue;
       }
-      if (val > guess) Console.WriteLine ("Guess is High");
-      else if (val != guess) Console.WriteLine ("Guess is Low");
+      if (val > guess) WriteLine ("Guess is High");
+      else if (val != guess) WriteLine ("Guess is Low");
       count++;
    }
-   Console.WriteLine (val + " is the correct number");
-   Console.WriteLine ("Total number of attempts " + count);
-   Console.WriteLine (" Press ENTER to play again");
-   if (Console.ReadKey ().Key != ConsoleKey.Enter) break;
+   WriteLine ($"{val}  is the correct number\nTotal number of attempts is {count}\nPress ENTER to play again");
+   if (ReadKey ().Key != ConsoleKey.Enter) break;
    else
       continue;
 }
