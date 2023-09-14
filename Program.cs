@@ -3,7 +3,8 @@ using static System.Console;
 WriteLine ("Enter a number: ");
 string Number = ReadLine () ?? "";
 int i, numberLength = Number.Length;
-for (i = 0; i <= numberLength / 2; i++)
+int condition = numberLength / 2;
+for (i = 0; i <= condition; i++)
    if (Number[i] != Number[numberLength - 1 - i])
       break;
-WriteLine ("It is " + (i == numberLength / 2 + 1 ? "" : "not ") + "a palindrome");
+WriteLine ("It is " + (i == condition + 1 ? "" : "not ") + "a palindrome");
