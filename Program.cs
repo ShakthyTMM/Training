@@ -2,9 +2,9 @@
 using static System.Console;
 using System.IO;
 
-string[] words = File.ReadAllLines ("C:/Users/shakthy.r/Downloads/words.txt");
+string[] words = File.ReadAllLines ("C:/Users/shakthy.r/Downloads/words-shuffle.txt");
 char[] letters = { 'U', 'X', 'A', 'L', 'T', 'N', 'E' };
-List<string> resultList = new List<string> ();
+var resultList = new List<string> ();
 foreach (var word in words) {
    int count = 0;
    for (int i = 0; i < word.Length; i++) {
@@ -16,10 +16,9 @@ foreach (var word in words) {
    if (count >= 4 && word.Contains (letters[0]))
       resultList.Add (word);
 }
-resultList = resultList.OrderByDescending (x => x.Length).ToList ();
-int point = 0;
-int score = 0;
-resultList.Remove (isPangram (resultList));
+resultList = resultList.OrderBy (x => x).OrderByDescending (x => x.Length).ToList ();
+int point, score = 0;
+resultList.Remove (Pangram (resultList));
 foreach (var ch in resultList) {
    ForegroundColor = ConsoleColor.White;
    if (ch.Length == 4) {
@@ -31,12 +30,12 @@ foreach (var ch in resultList) {
    }
 }
 WriteLine ($"----\n{score} total");
-string isPangram (List<string> list) {
+string Pangram (List<string> list) {
    foreach (var ch in list) {
       if (ch.Length > 4 && letters.All (ch.Contains)) {
          ForegroundColor = ConsoleColor.Green;
-         WriteLine ($"{point = 15}. {ch}");
-         score += 15;
+         WriteLine ($"{point = ch.Length + 7}. {ch}");
+         score += ch.Length + 7;
          return ch;
       }
    }
