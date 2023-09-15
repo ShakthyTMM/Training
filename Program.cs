@@ -1,7 +1,7 @@
 ﻿//Program to Get a Strong Password
 using static System.Console;
 Write ("Enter Password: ");
-string pass = ReadLine () ?? "";
+string password = ReadLine () ?? "";
 char[] password = pass.ToCharArray ();
 CheckPassword (pass, password);
 void CheckPassword (string pass, char[] password) {
