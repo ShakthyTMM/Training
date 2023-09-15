@@ -12,10 +12,10 @@
          number++;
          sum = 0;
          var check = number;
-         string length = Convert.ToString (number);
-         for (int j = 1; j <= length.Length; j++) {
+         string numberLength = Convert.ToString (number);
+         for (int j = 1; j <= numberLength.Length; j++) {
             var rem = check % 10;
-            sum = sum + Math.Pow (rem, length.Length);
+            sum = sum + Math.Pow (rem, numberLength.Length);
             check /= 10;
          }
          if (sum == number) index++;
