@@ -1,23 +1,24 @@
 ﻿// Program to develop Spell Bee game
 using static System.Console;
 
-char[] letters = { 'E', 'I', 'S', 'A', 'R', 'N', 'T' };
-int score = 0;
+char[] Letters = { 'E', 'I', 'S', 'A', 'R', 'N', 'T' };
+int TotalScore = 0;
 var validWords = File.ReadAllLines ("C:/Users/shakthy.r/Downloads/words-shuffle.txt")
                               .Where (x => x.Length >= 4
-                               && x.Contains (letters[0])
-                               && x.All (letters.Contains)).Select (GetScore)
-                               .OrderBy (x => x.Item3).OrderByDescending (x => x.Item1).ToList ();
-foreach (var word in validWords) {
-   if (word.Item2) ForegroundColor = ConsoleColor.Green;
-   WriteLine ($"{word.Item1,5} {word.Item3}");
+                               && x.Contains (Letters[0])
+                               && x.All (Letters.Contains)).Select (GetScore)
+                               .OrderBy (x => x.Pangram).OrderByDescending (x => x.Score).ThenBy (x => x).ToList ();
+
+foreach (var Word in validWords) {
+   if (Word.Pangram) ForegroundColor = ConsoleColor.Green;
+   WriteLine ($"{Word.Score,5} {Word.Word}");
    ResetColor ();
 }
-WriteLine ($"-----------------\n{score,5} TOTAL");
-(int, bool, string) GetScore (string word) {
-   int point;
-   bool pangram = letters.All (word.Contains);
-   point = (word.Length > 4 ? word.Length : 1) + (pangram ? 7 : 0);
-   score += point;
-   return (point, pangram, word);
+WriteLine ($"-----------------\n{TotalScore,5} TOTAL");
+(int Score, bool Pangram, string Word) GetScore (string Word) {
+   int Score;
+   bool Pangram = Letters.All (Word.Contains);
+   Score = (Word.Length > 4 ? Word.Length : 1) + (Pangram ? 7 : 0);
+   TotalScore += Score;
+   return (Score, Pangram, Word);
 }
