@@ -7,26 +7,43 @@
 
 using static System.Console;
 char[] chars = new char[char.MaxValue];
-WriteLine ("Enter the number of elements in the array: ");
-if (int.TryParse (ReadLine (), out int n))
-   for (int i = 0; i < n; i++) {
-      Write ($"Enter element {i + 1} : ");
-      if (!char.TryParse (ReadLine () ?? "".ToLower (), out chars[i]) || !char.IsLetter (chars[i]))
-         WriteLine ("Enter valid input");
+while (true) {
+   Write ("Enter the number of elements in the array: ");
+   if (!int.TryParse (ReadLine (), out int n)) {
+      Write ("Enter a valid input\n");
+      continue;
+   } else {
+      for (int i = 0; i < n; i++) {
+         while (true) {
+            Write ($"Enter element {i + 1} : ");
+            if (!char.TryParse (ReadLine () ?? "".ToLower (), out chars[i]) || !char.IsLetter (chars[i]))
+               WriteLine ("Enter valid input\n");
+            else break;
+         }
+      }
+      while (true) {
+         WriteLine ("Enter the special character among the array: ");
+         if (!char.TryParse (ReadLine () ?? "".ToLower (), out char s) || !char.IsLetter (s)) {
+            WriteLine ("Enter valid input\n");
+            continue;
+         } else {
+            while (true) {
+               WriteLine ("Is the array to be sorted in descending order (Y/N): ");
+               if (!char.TryParse (ReadLine () ?? "".ToLower (), out char order) && order != 'y' && order != 'n') {
+                  Write ("Enter valid input\n");
+                  continue;
+               } else {
+                  var result = order == 'y' ? GetSortedArray (chars, s, order) : GetSortedArray (chars, s);
+                  foreach (var ch in result)
+                     Write (ch);
+               }
+               break;
+            }
+         }
+         break;
+      }
    }
-else Write ("Enter a valid input");
-WriteLine ("Enter the special character among the array: ");
-if (!char.TryParse (ReadLine () ?? "".ToLower (), out char s) || !char.IsLetter (s))
-   WriteLine ("Enter valid input");
-else {
-   WriteLine ("Is the array to be sorted in descending order (Y/N): ");
-   if (!char.TryParse (ReadLine () ?? "".ToLower (), out char order) && order != 'y' && order != 'n')
-      Write ("Enter valid input");
-   else {
-      var result = order == 'y' ? GetSortedArray (chars, s, order) : GetSortedArray (chars, s);
-      foreach (var ch in result)
-         Write (ch);
-   }
+   break;
 }
 /// <summary> Function to sorted the array in the given sort order and return </summary>
 /// <param name="arr"> array of character to be sorted</param>
