@@ -6,15 +6,15 @@ if (double.TryParse (ReadLine () ?? "", out double Input)) {
    GetNumbers (Output);
 } else WriteLine ("Enter a valid number");
 void GetNumbers (string Number) {
-   var Integral = new List<string> ();
-   var Decimal = new List<string> ();
+   var Integral = new List<char> ();
+   var Decimal = new List<char> ();
    foreach (var ch in Number) {
-      if (ch.ToString () != ".") {
-         Integral.Add (ch.ToString ());
+      if (ch!='.') {
+         Integral.Add (ch);
          continue;
-      } else if (ch.ToString () == ".") {
+      } else if (ch=='.') {
          int Length = Number.IndexOf (ch) + 1;
-         for (int i = Length; i < Number.Length; i++) Decimal.Add (Number[i].ToString ());
+         for (int i = Length; i < Number.Length; i++) Decimal.Add (Number[i]);
       }
       break;
    }
