@@ -6,7 +6,7 @@
 // Sample Output :C = 4, X = 3, W = 1
 using static System.Console;
 while (true) {
-   Write ("Enter the the amount to buy chocolates: ");
+   Write ("Enter the amount to buy chocolates: ");
    if (!int.TryParse (ReadLine (), out int money) || money <= 0) {
       Write ("Enter valid money\n");
       continue;
@@ -25,7 +25,7 @@ while (true) {
                   continue;
                } else if (money >= priceofChocolate) {
                   var result = GetMaxChoc (money, priceofChocolate, wrappers);
-                  Write ($"\nTotal number of chocolates purchased and obtained in exchange for wrappers: {result.MaxChoc}\nThe amount remaining after the purchase: {result.Money}\nThe remaining wrappers: {result.Wrappers}\n");
+                  Write ($"\nTotal number of chocolates purchased and obtained in exchange for wrappers: {result.MaxChoc}\nThe amount remaining after the purchase: {result.Money}\nThe wrappers remaining after the purchase: {result.Wrappers}\n");
                   break;
                } else {
                   Write ("The Money is too Low.");
