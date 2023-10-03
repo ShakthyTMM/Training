@@ -33,8 +33,8 @@ while (true) {
                   Write ("Enter valid input\n");
                   continue;
                } else {
-                  if (order == 'y') GetSortedArray (chars, s, order);
-                  else GetSortedArray (chars, s);
+                  if (order == 'y') PrintSortedArray (chars, s, order);
+                  else PrintSortedArray (chars, s);
                }
                break;
             }
@@ -48,7 +48,7 @@ while (true) {
 /// <param name="arr"> array of character to be sorted</param>
 /// <param name="s"> special character</param>
 /// <param name="o">Sort order</param>
-void GetSortedArray (char[] arr, char s, char o = 'n') {
+void PrintSortedArray (char[] arr, char s, char o = 'n') {
    var elementsTodelete = arr.Where (x => x == s);
    var sortedarray = o == 'n' ? arr.Where (x => x != s).OrderBy (x => x).Concat (elementsTodelete) : arr.Where (x => x != s).OrderByDescending (x => x).Concat (elementsTodelete);
    foreach (var ch in sortedarray) Write (ch);
