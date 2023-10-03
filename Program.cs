@@ -44,7 +44,7 @@ while (true) {
    }
    break;
 }
-/// <summary> Function to sorted the array in the given sort order and return </summary>
+/// <summary> Function to sorted the array in the given sort order and print</summary>
 /// <param name="arr"> array of character to be sorted</param>
 /// <param name="s"> special character</param>
 /// <param name="o">Sort order</param>
