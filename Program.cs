@@ -11,7 +11,7 @@ Console.WriteLine ();
 list.Insert (4, 7);
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
-Console.WriteLine (list.Remove (22) ? "The element is removed": "The element does not exist");
+Console.WriteLine (list.Remove (22) ? "The element is removed" : "The element does not exist");
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
 list.RemoveAt (4);
@@ -29,7 +29,6 @@ Console.WriteLine ();
 /// <typeparam name="T">The datatype of the elements to be stored in the list</typeparam>
 class MyList<T> {
    T[] mArray;
-   int mCount;
 
    /// <summary> Constructor of MyList </summary>
    public MyList () {
@@ -71,12 +70,10 @@ class MyList<T> {
    public bool Remove (T a) {
       int index = Array.IndexOf (mArray, a);
       if (index == -1) return false;
-      else {
-         for (int i = index; i < mCount; i++)
-            mArray[i] = mArray[i + 1];
-         mCount--;
-         return true;
-      }
+      for (int i = index; i < mCount; i++)
+         mArray[i] = mArray[i + 1];
+      mCount--;
+      return true;
    }
 
    /// <summary> This method is to delete(clear) all the elements from the list </summary>
@@ -109,4 +106,5 @@ class MyList<T> {
          mArray[i] = mArray[i + 1];
       mCount--;
    }
+   int mCount;
 }
