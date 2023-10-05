@@ -11,7 +11,7 @@ Console.WriteLine ();
 list.Insert (4, 7);
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
-Console.WriteLine (list.Remove (22) ? "The element is removed" : "The element does not exist");
+Console.WriteLine (list.Remove (22) ? "The element is removed": "The element does not exist");
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
 list.RemoveAt (4);
