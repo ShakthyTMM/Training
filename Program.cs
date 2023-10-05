@@ -1,4 +1,4 @@
-﻿//Test cases
+﻿// Test cases
 MyList<int> list = new ();
 list.Add (1);
 list.Add (2);
@@ -11,13 +11,13 @@ Console.WriteLine ();
 list.Insert (4, 7);
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
-list.Remove (4);
+Console.WriteLine (list.Remove (22) ? "The element is removed": "The element does not exist");
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
 list.RemoveAt (4);
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
-list[3] = 0;
+list[3] = 7;
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
 list.Clear ();
@@ -25,106 +25,88 @@ for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
 
 
-/// <summary>
-/// The class MyList is created for the implementation of list with array as the underlying data structure
-/// </summary>
+/// <summary> The class MyList is created for the implementation of list with array as the underlying data structure </summary>
 /// <typeparam name="T">The datatype of the elements to be stored in the list</typeparam>
 class MyList<T> {
-   int count;
-   T[] array;
+   T[] mArray;
+   int mCount;
 
-   /// <summary>
-   /// Constructor of MyList
-   /// </summary>
+   /// <summary> Constructor of MyList </summary>
    public MyList () {
-      count = 0;
-      array = new T[4];
+      mArray = new T[4];
+      mCount = 0;
    }
-   /// <summary>
-   /// The property with the count of elements in the list
-   /// </summary>
-   public int Count => count;
+   /// <summary> The property with the count of elements in the list </summary>
+   public int Count => mCount;
 
-   /// <summary>
-   /// The property with the capacity of the list
-   /// </summary>
-   public int Capacity => array.Length;
+   /// <summary> The property with the capacity of the list </summary>
+   public int Capacity => mArray.Length;
 
-   /// <summary>
-   /// This property is to get and set values at the specified index in the list 
-   /// </summary>
-   /// <returns>Returns the value at that index</returns>
+   /// <summary> This property is to get and set values at the specified index in the list  </summary>
+   /// <returns> Returns the value at that index </returns>
    /// <exception cref="IndexOutOfRangeException"></exception>
    public T this[int index] {
       get {
          if (index < 0 || index >= Count) throw new IndexOutOfRangeException ();
-         return array[index];
+         return mArray[index];
       }
       set {
          if (index < 0 || index >= Count) throw new IndexOutOfRangeException ();
-         array[index] = value;
+         mArray[index] = value;
       }
    }
 
-   /// <summary>
-   /// This method is to add elements to the list
-   /// </summary>
+   /// <summary> This method is to add elements to the list </summary>
    /// <param name="a"></param>
    public void Add (T a) {
-      if (Count == Capacity) Array.Resize (ref array, Capacity * 2);
-      array[Count] = a;
-      count++;
+      if (Count == Capacity) Array.Resize (ref mArray, Capacity * 2);
+      mArray[Count] = a;
+      mCount++;
    }
 
-   /// <summary>
-   /// This method is to remove an element from the list
-   /// </summary>
-   /// <param name="a">The element to be removed </param>
-   /// <returns>Returns true if the element is removed</returns>
+   /// <summary> This method is to remove an element from the list </summary>
+   /// <param name="a"> The element to be removed </param>
+   /// <returns> Returns true if the element is removed else returns false if the element is not found in the list </returns>
    /// <exception cref="InvalidOperationException"></exception>
    public bool Remove (T a) {
-      if (!array.Contains (a)) throw new InvalidOperationException ();
-      int index = Array.IndexOf (array, a);
-      for (int i = index; i < count; i++)
-         array[i] = array[i + 1];
-      count--;
-      return true;
+      int index = Array.IndexOf (mArray, a);
+      if (index == -1) return false;
+      else {
+         for (int i = index; i < mCount; i++)
+            mArray[i] = mArray[i + 1];
+         mCount--;
+         return true;
+      }
    }
 
-   /// <summary>
-   /// This method is to delete(clear) all the elements from the list
-   /// </summary>
+   /// <summary> This method is to delete(clear) all the elements from the list </summary>
    /// <exception cref="IndexOutOfRangeException"></exception>
    public void Clear () {
-      if (array.Length < 0) throw new IndexOutOfRangeException ();
-      Array.Clear (array, 0, Count);
-      count = 0;
+      if (mArray.Length < 0) throw new IndexOutOfRangeException ();
+      Array.Clear (mArray, 0, Count);
+      mCount = 0;
    }
 
-   /// <summary>
-   /// This method is to insert an element in the list
-   /// </summary>
-   /// <param name="index">The index at which the element needs to be inserted</param>
-   /// <param name="a">The value of the element</param>
+   /// <summary> This method is to insert an element in the list </summary>
+   /// <param name="index"> The index at which the element needs to be inserted </param>
+   /// <param name="a"> The value of the element </param>
    /// <exception cref="InvalidOperationException"></exception>
    public void Insert (int index, T a) {
-      if (index < 0 || index >= count) throw new InvalidOperationException ();
-      if (count == Capacity) Array.Resize (ref array, Capacity * 2);
-      for (int i = count; i >= index; i--)
-         array[i + 1] = array[i];
-      array[index] = a;
-      count++;
+      if (index < 0 || index >= mCount) throw new InvalidOperationException ();
+      if (mCount == Capacity) Array.Resize (ref mArray, Capacity * 2);
+      for (int i = mCount; i >= index; i--)
+         mArray[i + 1] = mArray[i];
+      mArray[index] = a;
+      mCount++;
    }
 
-   /// <summary>
-   /// This method is to remove an element at the given index from the list
-   /// </summary>
-   /// <param name="index">The index of the element to be removed</param>
+   /// <summary> This method is to remove an element at the given index from the list </summary>
+   /// <param name="index"> The index of the element to be removed </param>
    /// <exception cref="InvalidOperationException"></exception>
    public void RemoveAt (int index) {
-      if (index < 0 || index >= count) throw new InvalidOperationException ();
-      for (int i = index; i < count; i++)
-         array[i] = array[i + 1];
-      count--;
+      if (index < 0 || index >= mCount) throw new InvalidOperationException ();
+      for (int i = index; i < mCount; i++)
+         mArray[i] = mArray[i + 1];
+      mCount--;
    }
 }
