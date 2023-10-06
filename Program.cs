@@ -15,7 +15,6 @@ Console.WriteLine (stack.Peek ());
 /// <summary>The class MyStack defines the implementation of stack with array as the underlying data structure</summary>
 /// <typeparam name="T">Datatype of the elements in the stack</typeparam>
 class MyStack<T> {
-
    /// <summary>Constructor of MyStack class</summary>
    public MyStack () {
       mArray = new T[4];
