@@ -22,9 +22,6 @@ class MyStack<T> {
       mTop = -1;
    }
 
-   /// <summary>Top property</summary>
-   int Top => mTop;
-
    /// <summary>Property with the capacity of the stack</summary>
    public int Capacity => mArray.Length;
 
@@ -63,7 +60,7 @@ class MyStack<T> {
          Console.Write (mArray[i] + " ");
       Console.WriteLine ();
    }
+
    T[] mArray;
    int mTop;
-
 }
