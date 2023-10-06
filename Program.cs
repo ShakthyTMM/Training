@@ -23,18 +23,23 @@ Console.WriteLine ();
 list.Clear ();
 for (int i = 0; i < list.Count; i++) Console.Write (list[i] + " ");
 Console.WriteLine ();
+
 /// <summary>The class MyList is created for the implementation of list with array as the underlying data structure</summary>
 /// <typeparam name="T">The datatype of the elements to be stored in the list</typeparam>
 class MyList<T> {
+
    /// <summary>Constructor of MyList</summary>
    public MyList () {
       mArray = new T[4];
       mCount = 0;
    }
+
    /// <summary>Property with the count of elements in the list</summary>
    public int Count => mCount;
+
    /// <summary>Property with the capacity of the list</summary>
    public int Capacity => mArray.Length;
+
    /// <summary>This property is to get and set values at the specified index in the list</summary>
    /// <returns>Returns the value at that index</returns>
    /// <exception cref="IndexOutOfRangeException"></exception>
@@ -48,6 +53,7 @@ class MyList<T> {
          mArray[index] = value;
       }
    }
+
    /// <summary>This method is to add elements to the list</summary>
    /// <param name="a">The value of the element</param>
    public void Add (T a) {
@@ -55,6 +61,7 @@ class MyList<T> {
       mArray[Count] = a;
       mCount++;
    }
+
    /// <summary>This method is to remove an element from the lis </summary>
    /// <param name="a">The element to be removed</param>
    /// <returns>Returns true if the element is removed else returns false if the element is not found in the list</returns>
@@ -67,6 +74,7 @@ class MyList<T> {
       mCount--;
       return true;
    }
+
    /// <summary>This method is to delete (clear) all the elements from the list</summary>
    /// <exception cref="IndexOutOfRangeException"></exception>
    public void Clear () {
@@ -74,6 +82,7 @@ class MyList<T> {
       Array.Clear (mArray, 0, Count);
       mCount = 0;
    }
+
    /// <summary>This method is to insert an element in the list</summary>
    /// <param name="index">The index at which the element needs to be inserted</param>
    /// <param name="a">The value of the element</param>
@@ -86,6 +95,7 @@ class MyList<T> {
       mArray[index] = a;
       mCount++;
    }
+
    /// <summary>This method is to remove an element at the given index from the list</summary>
    /// <param name="index">The index of the element to be removed</param>
    /// <exception cref="InvalidOperationException"></exception>
