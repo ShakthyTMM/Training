@@ -27,7 +27,6 @@ Console.WriteLine ();
 /// <summary>The class MyList is created for the implementation of list with array as the underlying data structure</summary>
 /// <typeparam name="T">The datatype of the elements to be stored in the list</typeparam>
 class MyList<T> {
-
    /// <summary>Constructor of MyList</summary>
    public MyList () {
       mArray = new T[4];
@@ -100,11 +99,13 @@ class MyList<T> {
    /// <param name="index">The index of the element to be removed</param>
    /// <exception cref="InvalidOperationException"></exception>
    public void RemoveAt (int index) {
+
       if (index < 0 || index >= mCount) throw new InvalidOperationException ();
       for (int i = index; i < mCount; i++)
          mArray[i] = mArray[i + 1];
       mCount--;
    }
+
    int mCount;
    T[] mArray;
 }
