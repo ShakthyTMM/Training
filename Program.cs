@@ -10,11 +10,12 @@ Console.WriteLine (queue.Dequeue ());
 queue.Display ();
 Console.WriteLine (queue.Peek ());
 queue.Display ();
+Console.WriteLine (queue.Dequeue ());
+queue.Display ();
 
 /// <summary>Class TQueue is to implement queue with array as the underlying data structure</summary>
 /// <typeparam name="T">Datatype of the queue</typeparam>
 class TQueue<T> {
-
    /// <summary> Constructor of TQueue </summary>
    public TQueue () {
       mFront = 0;
@@ -38,9 +39,7 @@ class TQueue<T> {
    public T Dequeue () {
       if (IsEmpty) throw new InvalidOperationException ();
       T item = mArray[mFront];
-      for (int i = 0; i <= mRear; i++)
-         mArray[i] = mArray[i + 1];
-      mRear--;
+      mFront++;
       return item;
    }
 
@@ -57,7 +56,7 @@ class TQueue<T> {
 
    /// <summary>The method to display the elements of the queue</summary>
    public void Display () {
-      for (int i = 0; i <= mRear; i++) Console.Write (mArray[i] + " ");
+      for (int i = mFront; i <= mRear; i++) Console.Write (mArray[i] + " ");
       Console.WriteLine ();
    }
 
