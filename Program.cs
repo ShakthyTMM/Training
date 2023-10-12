@@ -3,21 +3,18 @@ TQueue<int> queue = new ();
 queue.Enqueue (1);
 queue.Enqueue (2);
 queue.Enqueue (3);
+queue.Display ();
+Console.WriteLine (queue.Dequeue ());
+Console.WriteLine (queue.Dequeue ());
+queue.Display ();
 queue.Enqueue (4);
-queue.Display ();
-Console.WriteLine (queue.Dequeue ());
-Console.WriteLine (queue.Dequeue ());
-Console.WriteLine (queue.Dequeue ());
-Console.WriteLine (queue.Dequeue ());
-queue.Display ();
 queue.Enqueue (5);
 queue.Enqueue (6);
 queue.Enqueue (7);
 queue.Display ();
-Console.WriteLine (queue.Peek ());
-//Console.WriteLine (queue.Dequeue ());
-//queue.Display ();
-
+Console.WriteLine (queue.Dequeue ());
+Console.WriteLine (queue.Dequeue ());
+queue.Display() ;
 /// <summary>Class TQueue is to implement queue with array as the underlying data structure</summary>
 /// <typeparam name="T">Datatype of the queue</typeparam>
 class TQueue<T> {
@@ -35,7 +32,8 @@ class TQueue<T> {
    /// <summary>The method to add elements to the queue</summary>
    /// <param name="a">The value of the element to be added</param>
    public void Enqueue (T a) {
-      if (mRear == (Capacity - 1) && mFront==0 && mFront==mRear+1) Array.Resize (ref mArray, Capacity * 2);
+      if(mFront==-1) mFront= 0;
+      if ((mFront==0&& mRear == (Capacity-1)) || mFront==mRear+1) Array.Resize (ref mArray, Capacity * 2);
       else if(mRear == (Capacity - 1)) mRear= 0;
       mArray[++mRear] = a;
       count++;
@@ -47,7 +45,13 @@ class TQueue<T> {
    public T Dequeue () {
       if (IsEmpty) throw new InvalidOperationException ();
       T item = mArray[mFront];
-      mFront++;
+      if (mFront==mRear) {
+         mFront = -1;
+         mRear = -1;
+      }
+      else if(mFront==(Capacity-1)) 
+         mFront= 0;
+      else mFront++;
       return item;
    }
 
@@ -56,20 +60,19 @@ class TQueue<T> {
    /// <exception cref="InvalidOperationException"></exception>
    public T Peek () {
       if (IsEmpty) throw new InvalidOperationException ();
-      if(mFront==-1) mFront = 0;
-      if (mFront == (Capacity - 1)) mFront = (mFront + 1) % Capacity;
-      T item = mArray[mFront];
-      mFront++;
-      return item;
+      return mArray[mFront];
    }
 
    /// <summary>IsEmpty Property to check whether the queue is empty</summary>
-   public bool IsEmpty => mFront > mRear;
+   public bool IsEmpty => (mFront == -1&& mRear==-1);
 
    /// <summary>The method to display the elements of the queue</summary>
    public void Display () {
-      for (int i = 0; i <= mRear; i++) Console.Write (mArray[i] + " ");
-      Console.WriteLine ();
+      if (IsEmpty) Console.WriteLine ("Empty queue");
+      else {
+         for (int i = mFront; i <=mRear; i++) Console.Write (mArray[i] + " ");
+         Console.WriteLine ();
+      }
    }
 
    int mFront, mRear;
