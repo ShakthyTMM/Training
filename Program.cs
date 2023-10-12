@@ -23,7 +23,7 @@ Console.WriteLine (queue.Peek ());
 class TQueue<T> {
    /// <summary>Constructor of TQueue</summary>
    public TQueue () {
-      mFront = 0;
+      mFront = -1;
       mRear = -1;
       mArray = new T[4];
       count = 0;
@@ -35,7 +35,8 @@ class TQueue<T> {
    /// <summary>The method to add elements to the queue</summary>
    /// <param name="a">The value of the element to be added</param>
    public void Enqueue (T a) {
-      if (mRear == (Capacity - 1)) Array.Resize (ref mArray, Capacity * 2);
+      if (mRear == (Capacity - 1) && mFront==0 && mFront==mRear+1) Array.Resize (ref mArray, Capacity * 2);
+      else if(mRear == (Capacity - 1)) mRear= 0;
       mArray[++mRear] = a;
       count++;
    }
@@ -46,10 +47,7 @@ class TQueue<T> {
    public T Dequeue () {
       if (IsEmpty) throw new InvalidOperationException ();
       T item = mArray[mFront];
-      for (int i = 0; i < mRear; i++)
-         mArray[i] = mArray[i + 1];
-      Array.Clear (mArray, mRear, 1);
-      mRear = --count - 1;
+      mFront++;
       return item;
    }
 
@@ -58,7 +56,11 @@ class TQueue<T> {
    /// <exception cref="InvalidOperationException"></exception>
    public T Peek () {
       if (IsEmpty) throw new InvalidOperationException ();
-      return mArray[mFront];
+      if(mFront==-1) mFront = 0;
+      if (mFront == (Capacity - 1)) mFront = (mFront + 1) % Capacity;
+      T item = mArray[mFront];
+      mFront++;
+      return item;
    }
 
    /// <summary>IsEmpty Property to check whether the queue is empty</summary>
