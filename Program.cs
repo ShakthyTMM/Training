@@ -1,35 +1,42 @@
-﻿// Test Cases
-MyStack<int> stack = new ();
-stack.Push (1);
-stack.Push (2);
-stack.Push (3);
-stack.Push (4);
-stack.Push (5);
-stack.Display ();
-Console.WriteLine (stack.Pop ());
-stack.Display ();
-stack.Push (6);
-stack.Display ();
-Console.WriteLine (stack.Peek ());
+﻿namespace StackProgram;
+internal class Program {
+   private static void Main (string[] args) {
+      // Test Cases
+      MyStack<int> stack = new ();
+      stack.Push (1);
+      stack.Push (2);
+      stack.Push (3);
+      stack.Push (4);
+      stack.Push (5);
+      stack.Display ();
+      Console.WriteLine (stack.Pop ());
+      stack.Display ();
+      stack.Push (6);
+      stack.Display ();
+      Console.WriteLine (stack.Peek ());
+   }
+}
 
 /// <summary>The class MyStack defines the implementation of stack with array as the underlying data structure</summary>
 /// <typeparam name="T">Datatype of the elements in the stack</typeparam>
-class MyStack<T> {
+public class MyStack<T> {
    /// <summary>Constructor of MyStack class</summary>
    public MyStack () {
       mArray = new T[4];
       mTop = -1;
    }
 
-   /// <summary>Property with the capacity of the stack</summary>
+   /// <summary>Capacity of the stack</summary>
    public int Capacity => mArray.Length;
+
+   /// <summary>Count of the elements in the stack</summary>
+   public int Count => mTop+1;
 
    /// <summary>Push method for adding(pushing) elements into the stack</summary>
    /// <param name="a">the element to be pushed</param>
    public void Push (T a) {
       if (mTop == (Capacity - 1)) Array.Resize (ref mArray, Capacity * 2);
-      mTop++;
-      mArray[mTop] = a;
+      mArray[++mTop] = a;
    }
 
    /// <summary>Pop method for deleting (popping) the last element from the stack</summary>
