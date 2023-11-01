@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\WorkGIT\Training\Program.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace QueueProgram;
+internal class Program {
+   private static void Main (string[] args) {
+      TQueue&lt;int&gt; queue = new ();
+      queue.Enqueue (1);
+      queue.Enqueue (2);
+      queue.Enqueue (3);
+      // Enqueued 3 item, intial capacity is 4 so now
+      // capacity should be 4
+      if (queue.Capacity != 4) {
+         queue.Display ();
+         Console.WriteLine ($&quot;Expected capacity 4 but found {queue.Capacity}&quot;);
+         // return;
+      }
+      queue = new ();
+      queue.Enqueue (1);
+      queue.Enqueue (2);
+      queue.Enqueue (3);
+      queue.Enqueue (4);
+      queue.Dequeue ();
+      queue.Dequeue ();
+      queue.Display ();
+      queue.Enqueue (8);
+      queue.Display ();
+      queue.Enqueue (9);
+      queue.Display ();
+      queue.Enqueue (10);
+      queue.Enqueue (11);
+      queue.Enqueue (12);
+      queue.Enqueue (13);
+      queue.Enqueue (14);
+      queue.Enqueue (15);
+      queue.Display ();
+      queue.Dequeue ();
+      queue.Dequeue ();
+      queue.Dequeue ();
+      queue.Dequeue ();
+      queue.Dequeue ();
+      queue.Dequeue ();
+      queue.Enqueue (23);
+      queue.Display ();
+   }
+}
+
+public class TQueue&lt;T&gt; {
+   /// &lt;summary&gt;Constructor of TQueue&lt;/summary&gt;
+   public TQueue () {
+      mFront = -1;
+      mRear = -1;
+      mCount= 0;
+      mArray = new T[4];
+   }
+
+   /// &lt;summary&gt;Capacity of the queue&lt;/summary&gt;
+   public int Capacity =&gt; mArray.Length;
+
+   /// &lt;summary&gt;Count of the elements in the array&lt;/summary&gt;
+   public int Count =&gt; mCount;
+
+   /// &lt;summary&gt;The method to add elements to the queue&lt;/summary&gt;
+   /// &lt;param name=&quot;a&quot;&gt;The value of the element to be added&lt;/param&gt;
+   public void Enqueue (T a) {
+      if (IsFull) {
+         ArrayResize ();
+         Array.Resize (ref mArray, Capacity * 2);
+      }
+      if (mFront == -1) mFront = 0;
+      mRear = (mRear + 1) % Capacity;
+      mArray[mRear] = a;
+      mCount++;
+   }
+
+   /// &lt;summary&gt;The method to delete a element from the queue&lt;/summary&gt;
+   /// &lt;returns&gt;Returns the element to be deleted&lt;/returns&gt;
+   /// &lt;exception cref=&quot;InvalidOperationException&quot;&gt;&lt;/exception&gt;
+   public T Dequeue () {
+      if (IsEmpty) throw new InvalidOperationException ();
+      T item = mArray[mFront];
+      if (mFront == mRear) {
+         mFront = -1;
+         mRear = -1;
+      } else mFront = (mFront + 1) % Capacity;
+      mCount--;
+      return item;
+   }
+
+   /// &lt;summary&gt;The method to return the first element added to the queue&lt;/summary&gt;
+   /// &lt;returns&gt;Returns the first element of the queue&lt;/returns&gt;
+   /// &lt;exception cref=&quot;InvalidOperationException&quot;&gt;&lt;/exception&gt;
+   public T Peek () {
+      if (IsEmpty) throw new InvalidOperationException ();
+      return mArray[mFront];
+   }
+
+   /// &lt;summary&gt;IsEmpty Property to check whether the queue is empty&lt;/summary&gt;
+   public bool IsEmpty =&gt; mFront == -1;
+
+   /// &lt;summary&gt;IsFull Property to check whether the queue is full&lt;/summary&gt;
+   public bool IsFull =&gt; (mFront == 0 &amp;&amp; mRear == (Capacity - 1)) || mFront == mRear + 1;
+
+   /// &lt;summary&gt;The method to display the elements of the queue&lt;/summary&gt;
+   public void Display () {
+      if (IsEmpty) Console.WriteLine (&quot;Empty queue&quot;);
+      int i = mFront;
+      for (; i != mRear; i = (i + 1) % Capacity) Console.Write (mArray[i] + &quot; &quot;);
+      Console.WriteLine (mArray[i]);
+      Console.WriteLine ();
+   }
+
+   /// &lt;summary&gt;To Rearrange the elements in the array while resizing the array&lt;/summary&gt;
+   public void ArrayResize () {
+      T[] newArray = new T[Capacity];
+      int i = 0;
+      do {
+         newArray[i] = mArray[mFront];
+         mFront = (mFront + 1) % Capacity;
+         i++;
+      } while (mFront != (mRear + 1) % Capacity);
+      mArray = newArray;
+      mFront = 0;
+      mRear = Capacity - 1;
+   }
+
+   int mFront, mRear,mCount;
+   T[] mArray;
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[3,45,3,46,0],[4,7,4,34,0],[5,7,5,25,0],[6,7,6,25,0],[7,7,7,25,0],[10,7,10,31,0],[10,32,10,33,0],[11,10,11,27,0],[12,10,12,80,0],[14,7,14,8,0],[15,7,15,22,0],[16,7,16,25,0],[17,7,17,25,0],[18,7,18,25,0],[19,7,19,25,0],[20,7,20,24,0],[21,7,21,24,0],[22,7,22,24,0],[23,7,23,25,0],[24,7,24,24,0],[25,7,25,25,0],[26,7,26,24,0],[27,7,27,26,0],[28,7,28,26,0],[29,7,29,26,0],[30,7,30,26,0],[31,7,31,26,0],[32,7,32,26,0],[33,7,33,24,0],[34,7,34,24,0],[35,7,35,24,0],[36,7,36,24,0],[37,7,37,24,0],[38,7,38,24,0],[39,7,39,24,0],[40,7,40,26,0],[41,7,41,24,0],[42,4,42,5,0],[47,4,47,20,1],[47,21,47,22,1],[48,7,48,19,1],[49,7,49,18,1],[50,7,50,17,1],[51,7,51,25,1],[52,4,52,5,1],[55,27,55,40,1],[58,24,58,30,1],[62,30,62,31,1],[63,7,63,18,1],[63,19,63,20,1],[64,10,64,25,1],[65,10,65,50,1],[66,7,66,8,1],[67,7,67,24,1],[67,25,67,36,1],[68,7,68,38,1],[69,7,69,25,1],[70,7,70,16,1],[71,4,71,5,1],[76,24,76,25,1],[77,7,77,19,1],[77,20,77,59,1],[78,7,78,31,1],[79,7,79,27,1],[79,28,79,29,1],[80,10,80,22,1],[81,10,81,21,1],[82,7,82,8,1],[82,14,82,47,1],[83,7,83,16,1],[84,7,84,19,1],[85,4,85,5,1],[90,21,90,22,1],[91,7,91,19,1],[91,20,91,59,1],[92,7,92,29,1],[93,4,93,5,1],[96,27,96,39,1],[99,26,99,89,1],[102,27,102,28,0],[103,7,103,19,0],[103,20,103,54,0],[104,7,104,22,0],[105,14,105,24,0],[105,26,105,48,0],[105,50,105,82,0],[106,7,106,37,0],[107,7,107,28,0],[108,4,108,5,0],[111,31,111,32,1],[112,7,112,38,1],[113,7,113,17,1],[114,10,114,11,1],[115,10,115,39,1],[116,10,116,43,1],[117,10,117,14,1],[118,7,118,8,1],[118,9,118,50,1],[119,7,119,25,1],[120,7,120,18,1],[121,7,121,28,1],[122,4,122,5,1]]);
+    </script>
+  </body>
+</html>

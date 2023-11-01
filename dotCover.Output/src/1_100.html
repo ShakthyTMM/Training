@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\WorkGIT\TestQueue\UnitTest1.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using QueueProgram;
+namespace TestQueue
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        Queue&lt;int&gt; queue1=new();
+        TQueue&lt;int&gt; queue2=new();
+
+        [TestMethod]
+        public void TestEnqueue()
+        {
+            queue2.Enqueue(1);
+            queue2.Enqueue(2);
+            queue2.Enqueue(3);
+            queue2.Enqueue(4);
+            Assert.AreEqual(4,queue2.Capacity);
+            queue2.Enqueue(5);
+            Assert.AreEqual(5, queue2.Count);
+            Assert.AreEqual(8, queue2.Capacity);
+        }
+        [TestMethod]
+        public void TestDequeue()
+        {
+            queue2.Enqueue(1);
+            queue2.Enqueue(2);
+            queue2.Enqueue(3);
+            queue2.Enqueue(4);
+            queue2.Dequeue();
+            queue2.Dequeue();
+            Assert.AreEqual(2, queue2.Count);
+            queue2.Dequeue();
+            queue2.Dequeue();
+            //Assert.ThrowsException&lt;InvalidOperationException&gt;(() =&gt; queue2.Dequeue());
+        }
+        [TestMethod]
+        public void TestPeek()
+        {
+            queue2.Enqueue(1);
+            queue2.Enqueue(2);
+            queue2.Enqueue(3);
+            Assert.AreEqual(1,queue2.Peek());
+            queue2.Dequeue();
+            queue2.Dequeue();
+            queue2.Dequeue();
+            Assert.ThrowsException&lt;InvalidOperationException&gt;(() =&gt; queue2.Peek());
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[7,9,7,33,1],[8,9,8,34,1],[12,9,12,10,1],[13,13,13,31,1],[14,13,14,31,1],[15,13,15,31,1],[16,13,16,31,1],[17,13,17,48,1],[18,13,18,31,1],[19,13,19,46,1],[20,13,20,49,1],[21,9,21,10,1],[24,9,24,10,1],[25,13,25,31,1],[26,13,26,31,1],[27,13,27,31,1],[28,13,28,31,1],[29,13,29,30,1],[30,13,30,30,1],[31,13,31,46,1],[32,13,32,30,1],[33,13,33,30,1],[35,9,35,10,1],[38,9,38,10,1],[39,13,39,31,1],[40,13,40,31,1],[41,13,41,31,1],[42,13,42,46,1],[43,13,43,30,1],[44,13,44,30,1],[45,13,45,30,1],[46,13,46,69,1],[46,69,46,82,1],[46,82,46,84,1],[47,9,47,10,1]]);
+    </script>
+  </body>
+</html>
