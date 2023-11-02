@@ -5,7 +5,14 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <BaseOutputPath>C:\WorkGIT\Training\bin</BaseOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TestQueue\**" />
+    <EmbeddedResource Remove="TestQueue\**" />
+    <None Remove="TestQueue\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove=".gitignore" />
