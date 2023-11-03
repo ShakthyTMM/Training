@@ -50,10 +50,7 @@ public class TQueue<T> {
    /// <summary>Adds elements to the queue</summary>
    /// <param name="a">The value of the element to be added</param>
    public void Enqueue (T a) {
-      if (IsFull) {
-         ArrayResize ();
-         Array.Resize (ref mArray, Capacity * 2);
-      }
+      if (IsFull) ArrayResize ();
       if (mFront == -1) mFront = 0;
       mRear = (mRear + 1) % Capacity;
       mArray[mRear] = a;
@@ -100,7 +97,7 @@ public class TQueue<T> {
 
    /// <summary>Rearranges the elements in the array while resizing the array</summary>
    public void ArrayResize () {
-      T[] newArray = new T[Capacity];
+      T[] newArray = new T[Capacity*2];
       int i = 0;
       do {
          newArray[i] = mArray[mFront];
