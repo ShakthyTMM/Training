@@ -1,14 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <BaseOutputPath>C:\WorkGIT\Training\bin</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="dotCover.Output\**" />
+    <Compile Remove="Queue\**" />
+    <Compile Remove="TestList\**" />
+    <Compile Remove="TestProject1\**" />
+    <Compile Remove="TestQueue\**" />
+    <EmbeddedResource Remove="dotCover.Output\**" />
+    <EmbeddedResource Remove="Queue\**" />
+    <EmbeddedResource Remove="TestList\**" />
+    <EmbeddedResource Remove="TestProject1\**" />
+    <EmbeddedResource Remove="TestQueue\**" />
+    <None Remove="dotCover.Output\**" />
+    <None Remove="Queue\**" />
+    <None Remove="TestList\**" />
+    <None Remove="TestProject1\**" />
+    <None Remove="TestQueue\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="dotCover.Output.html" />
   </ItemGroup>
 
 </Project>
