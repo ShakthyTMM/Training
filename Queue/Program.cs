@@ -9,7 +9,7 @@
 namespace QueueProgram;
 internal class Program {
    private static void Main (string[] args) {
-      TQueue<int> queue = new();
+      TQueue<int> queue = new ();
       queue.Enqueue (1);
       queue.Enqueue (2);
       queue.Enqueue (3);
@@ -32,12 +32,11 @@ internal class Program {
       Console.WriteLine ("Peek:" + queue.Peek ());
    }
 }
+
 public class TQueue<T> {
    /// <summary>Constructor of TQueue</summary>
    public TQueue () {
-      mFront = -1;
-      mRear = -1;
-      mCount = 0;
+      (mFront, mRear, mCount) = (-1, -1, 0);
       mArray = new T[4];
    }
 
@@ -61,13 +60,12 @@ public class TQueue<T> {
    /// <returns>Returns the element to be deleted</returns>
    /// <exception cref="InvalidOperationException"></exception>
    public T Dequeue () {
-      if (IsEmpty) throw new InvalidOperationException();
+      if (IsEmpty) throw new InvalidOperationException ();
       T item = mArray[mFront];
       if (mFront == mRear) {
          mFront = -1;
          mRear = -1;
-      }
-      else mFront = (mFront + 1) % Capacity;
+      } else mFront = (mFront + 1) % Capacity;
       mCount--;
       return item;
    }
@@ -76,7 +74,7 @@ public class TQueue<T> {
    /// <returns>Returns the first element of the queue</returns>
    /// <exception cref="InvalidOperationException"></exception>
    public T Peek () {
-      if (IsEmpty) throw new InvalidOperationException();
+      if (IsEmpty) throw new InvalidOperationException ();
       return mArray[mFront];
    }
 
@@ -84,29 +82,27 @@ public class TQueue<T> {
    public bool IsEmpty => mFront == -1;
 
    /// <summary>To check whether the queue is full</summary>
-   public bool IsFull => (mFront == 0 && mRear == (Capacity - 1)) || mFront == mRear + 1;
+   public bool IsFull => Capacity == Count;
 
    /// <summary>Displays the elements of the queue</summary>
    public void Display () {
-      if (IsEmpty) Console.WriteLine("Empty queue");
+      if (IsEmpty) Console.WriteLine ("Empty queue");
       int i = mFront;
-      for (; i != mRear; i = (i + 1) % Capacity) Console.Write(mArray[i] + " ");
-      Console.WriteLine(mArray[i]);
-      Console.WriteLine();
+      for (; i != mRear; i = (i + 1) % Capacity) Console.Write (mArray[i] + " ");
+      Console.WriteLine (mArray[i]);
+      Console.WriteLine ();
    }
 
    /// <summary>Rearranges the elements in the array while resizing the array</summary>
    public void ArrayResize () {
-      T[] newArray = new T[Capacity*2];
-      int i = 0;
-      do {
+      T[] newArray = new T[Capacity * 2];
+      for (int i = 0; i < Count; i++) {
          newArray[i] = mArray[mFront];
          mFront = (mFront + 1) % Capacity;
-         i++;
-      } while (mFront != (mRear + 1) % Capacity);
+      }
       mArray = newArray;
       mFront = 0;
-      mRear = Capacity - 1;
+      mRear = Count - 1;
    }
 
    int mFront, mRear, mCount;
