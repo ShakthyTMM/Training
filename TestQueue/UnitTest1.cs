@@ -2,7 +2,7 @@ using QueueProgram;
 namespace TestQueue {
    [TestClass]
    public class UnitTest1 {
-      TQueue<int> queue = new();
+      TQueue<int> queue = new ();
       [TestMethod]
       public void TestEnqueue () {
          queue.Enqueue (1);
@@ -26,7 +26,7 @@ namespace TestQueue {
          Assert.AreEqual (2, queue.Count);
          queue.Dequeue ();
          queue.Dequeue ();
-         Assert.ThrowsException<InvalidOperationException>(() => queue.Dequeue());
+         Assert.ThrowsException<InvalidOperationException> (() => queue.Dequeue ());
       }
 
       [TestMethod]
@@ -34,11 +34,11 @@ namespace TestQueue {
          queue.Enqueue (1);
          queue.Enqueue (2);
          queue.Enqueue (3);
-         Assert.AreEqual (1, queue.Peek());
+         Assert.AreEqual (1, queue.Peek ());
          queue.Dequeue ();
          queue.Dequeue ();
          queue.Dequeue ();
-         Assert.ThrowsException<InvalidOperationException>(() => queue.Peek());
+         Assert.ThrowsException<InvalidOperationException> (() => queue.Peek ());
       }
    }
 }
