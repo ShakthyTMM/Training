@@ -52,14 +52,9 @@ public class TQueue<T> {
    /// <param name="a">The value of the element to be added</param>
    public void Enqueue (T a) {
       if (IsFull) ArrayResize ();
-      if (mRear == Capacity - 1) {
-         mArray[mRear] = a;
-         mCount++;
-      } else {
-         mArray[mRear] = a;
-         mRear = (mRear + 1) % Capacity;
-         mCount++;
-      }
+      mArray[mRear] = a;
+      mRear = (mRear + 1) % Capacity;
+      mCount++;
    }
 
    /// <summary>Deletes an element from the queue</summary>
@@ -69,7 +64,6 @@ public class TQueue<T> {
       if (IsEmpty) throw new InvalidOperationException ();
       T item = mArray[mFront];
       mCount--;
-      if (mCount == 0) mRear = 0;
       mFront = (mFront + 1) % Capacity;
       return item;
    }
@@ -92,9 +86,7 @@ public class TQueue<T> {
    public void Display () {
       if (IsEmpty) Console.WriteLine ("Empty queue");
       else {
-         int i = mFront;
-         for (; i != mRear; i = (i + 1) % Capacity) Console.Write (mArray[i] + " ");
-         Console.Write (mArray[i]);
+         for (int i = 0; i < mCount; i++) Console.Write (mArray[(mFront + i) % Capacity] + " ");
          Console.WriteLine ();
       }
    }
@@ -103,8 +95,7 @@ public class TQueue<T> {
    public void ArrayResize () {
       T[] newArray = new T[Capacity * 2];
       for (int i = 0; i < Count; i++) {
-         newArray[i] = mArray[mFront];
-         mFront = (mFront + 1) % Capacity;
+         newArray[i] = mArray[(mFront + i) % Capacity];
       }
       mArray = newArray;
       mFront = 0;
