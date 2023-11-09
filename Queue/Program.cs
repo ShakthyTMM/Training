@@ -38,9 +38,7 @@ internal class Program {
 
 public class TQueue<T> {
    /// <summary>Constructor of TQueue</summary>
-   public TQueue () {
-      mArray = new T[4];
-   }
+   public TQueue () => mArray = new T[4];
 
    /// <summary>Capacity of the queue</summary>
    public int Capacity => mArray.Length;
@@ -94,12 +92,9 @@ public class TQueue<T> {
    /// <summary>Rearranges the elements in the array while resizing the array</summary>
    public void ArrayResize () {
       T[] newArray = new T[Capacity * 2];
-      for (int i = 0; i < Count; i++) {
+      for (int i = 0; i < Count; i++)
          newArray[i] = mArray[(mFront + i) % Capacity];
-      }
-      mArray = newArray;
-      mFront = 0;
-      mRear = Count;
+      (mArray, mFront, mRear) = (newArray, 0, Count);
    }
 
    int mFront, mRear, mCount;
