@@ -1,47 +1,57 @@
 using StackProgram;
+
 namespace TestStack {
     [TestClass]
     public class UnitTest1 {
-        MyStack<int> stack = new ();
+
+        /// <summary>To test the Push method's functionality</summary>
         [TestMethod]
         public void TestPush () {
-            stack.Push (1);
-            stack.Push (2);
-            stack.Push (3);
-            Assert.AreEqual (3, stack.Count);
-            stack.Push (4);
-            Assert.AreEqual (4, stack.Capacity);
-            stack.Push (5);
-            Assert.AreEqual (8, stack.Capacity);
+            mStack.Push (1);
+            mStack.Push (2);
+            mStack.Push (3);
+            Assert.AreEqual (3, mStack.Count);
+            mStack.Push (4);
+            Assert.AreEqual (4, mStack.Capacity);
+            mStack.Push (5);
+            Assert.AreEqual (8, mStack.Capacity);
         }
+
+        /// <summary>To test the Pop method's functionality</summary>
         [TestMethod]
         public void TestPop () {
-            stack.Push (1);
-            stack.Push (2);
-            stack.Push (3);
-            stack.Pop ();
-            stack.Pop ();
-            Assert.AreEqual (1, stack.Count);
-            stack.Pop ();
-            Assert.ThrowsException<InvalidOperationException> (() => stack.Pop ());
+            mStack.Push (1);
+            mStack.Push (2);
+            mStack.Push (3);
+            mStack.Pop ();
+            mStack.Pop ();
+            Assert.AreEqual (1, mStack.Count);
+            mStack.Pop ();
+            Assert.ThrowsException<InvalidOperationException> (() => mStack.Pop ());
         }
+
+        /// <summary>To test the Peek method's functionality</summary>
         [TestMethod]
         public void TestPeek () {
-            stack.Push (1);
-            stack.Push (2);
-            stack.Push (3);
-            Assert.AreEqual (3, stack.Peek ());
-            stack.Pop ();
-            stack.Pop ();
-            stack.Pop ();
-            Assert.ThrowsException<InvalidOperationException> (() => stack.Peek ());
+            mStack.Push (1);
+            mStack.Push (2);
+            mStack.Push (3);
+            Assert.AreEqual (3, mStack.Peek ());
+            mStack.Pop ();
+            mStack.Pop ();
+            mStack.Pop ();
+            Assert.ThrowsException<InvalidOperationException> (() => mStack.Peek ());
         }
+
+        /// <summary>To test the Display method's functionality</summary>
         [TestMethod]
         public void TestDisplay () {
-            stack.Push (1);
-            stack.Push (2);
-            stack.Push (3);
-            stack.Display ();
+            mStack.Push (1);
+            mStack.Push (2);
+            mStack.Push (3);
+            mStack.Display ();
         }
+
+        MyStack<int> mStack = new ();
     }
 }
