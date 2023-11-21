@@ -7,9 +7,8 @@ namespace TestStack {
         /// <summary>To test the Push method's functionality</summary>
         [TestMethod]
         public void TestPush () {
-            mStack.Push (1);
-            mStack.Push (2);
-            mStack.Push (3);
+            for (int i = 1; i <= 3; i++)
+                mStack.Push (i);
             Assert.AreEqual (3, mStack.Count);
             mStack.Push (4);
             Assert.AreEqual (4, mStack.Capacity);
@@ -20,9 +19,8 @@ namespace TestStack {
         /// <summary>To test the Pop method's functionality</summary>
         [TestMethod]
         public void TestPop () {
-            mStack.Push (1);
-            mStack.Push (2);
-            mStack.Push (3);
+            for (int i = 1; i <= 3; i++)
+                mStack.Push (i);
             mStack.Pop ();
             mStack.Pop ();
             Assert.AreEqual (1, mStack.Count);
@@ -33,22 +31,19 @@ namespace TestStack {
         /// <summary>To test the Peek method's functionality</summary>
         [TestMethod]
         public void TestPeek () {
-            mStack.Push (1);
-            mStack.Push (2);
-            mStack.Push (3);
+            for (int i = 1; i <= 3; i++)
+                mStack.Push (i);
             Assert.AreEqual (3, mStack.Peek ());
-            mStack.Pop ();
-            mStack.Pop ();
-            mStack.Pop ();
+            for (int i = 1; i <= 3; i++)
+                mStack.Pop ();
             Assert.ThrowsException<InvalidOperationException> (() => mStack.Peek ());
         }
 
         /// <summary>To test the Display method's functionality</summary>
         [TestMethod]
         public void TestDisplay () {
-            mStack.Push (1);
-            mStack.Push (2);
-            mStack.Push (3);
+            for (int i = 1; i <= 3; i++)
+                mStack.Push (i);
             mStack.Display ();
         }
 
