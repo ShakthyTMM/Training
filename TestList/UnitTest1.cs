@@ -7,9 +7,8 @@ namespace TestList {
       ///<summary>To test the Add method's functionality</summary>
       [TestMethod]
       public void TestAdd () {
-         mList.Add (1);
-         mList.Add (2);
-         mList.Add (3);
+         for (int i = 1; i <= 3; i++)
+            mList.Add (i);
          Assert.AreEqual (3, mList.Count);
          mList.Add (4);
          Assert.AreEqual (4, mList.Capacity);
@@ -25,15 +24,13 @@ namespace TestList {
       ///<summary>To test the Remove method's functionality</summary>
       [TestMethod]
       public void TestRemove () {
-         mList.Add (1);
-         mList.Add (2);
-         mList.Add (3);
+         for (int i = 1; i <= 3; i++)
+            mList.Add (i);
          Assert.IsTrue (mList.Remove (3));
          Assert.AreEqual (2, mList.Count);
          Assert.AreEqual (4, mList.Capacity);
-         mList.Add (5);
-         mList.Add (6);
-         mList.Add (7);
+         for (int i = 5; i <= 7; i++)
+            mList.Add (i);
          Assert.AreEqual (8, mList.Capacity);
          Assert.IsFalse (mList.Remove (-5));
       }
@@ -41,9 +38,8 @@ namespace TestList {
       ///<summary>To test the RemoveAt method's functionality</summary>
       [TestMethod]
       public void TestRemoveAt () {
-         mList.Add (1);
-         mList.Add (2);
-         mList.Add (3);
+         for (int i = 1; i <= 3; i++)
+            mList.Add (i);
          mList.RemoveAt (2);
          Assert.AreEqual (2, mList.Count);
          Assert.ThrowsException<InvalidOperationException> (() => mList.RemoveAt (10));
@@ -52,10 +48,8 @@ namespace TestList {
       ///<summary>To test the Insert method's functionality</summary>
       [TestMethod]
       public void TestInsert () {
-         mList.Add (1);
-         mList.Add (2);
-         mList.Add (3);
-         mList.Add (4);
+         for (int i = 1; i <= 4; i++)
+            mList.Add (i);
          mList.Insert (1, 5);
          Assert.AreEqual (5, mList.Count);
          Assert.ThrowsException<InvalidOperationException> (() => mList.Insert (10, 5));
@@ -76,7 +70,6 @@ namespace TestList {
       public void TestDisplay () {
          Assert.ThrowsException<InvalidOperationException> (mList.Display);
          mList.Add (1);
-         mList.Add (2);
          mList.Display ();
       }
 
