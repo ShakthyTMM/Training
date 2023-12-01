@@ -6,55 +6,65 @@
 // Double Parse
 // To implement double.Parse method that takes a string and returns a double
 // ----------------------------------------------------------------------------------------
-using System.Text.RegularExpressions;
-using static System.Console;
 internal class Program {
    private static void Main (string[] args) {
-      WriteLine (Mdouble.Parse ("-3.14926E+9") + "\n" + Mdouble.Parse ("-52145621.152E-5"));
+      Console.WriteLine (Mdouble.Parse ("-3.1492e14") + "\n" + Mdouble.Parse ("59625454.45e-45"));
+   }
+   /// <summary>Mdouble class to implement Parse method</summary>
+   class Mdouble {
+
+      /// <summary>Converts the string representation of a number to it's double-precision floating-point number equivalent </summary>
+      /// <param name="s">The string(numeric value) which needs to be converted into double-precision floating-point number</param>
+      /// <returns>Returns the double-precision floating-point number equivalent to the given numeric value s</returns>
+      /// <exception cref="ArgumentNullException"></exception>
+      /// <exception cref="FormatException"></exception>
+      public static double Parse (string s) {
+         if (string.IsNullOrEmpty (s)) throw new ArgumentNullException ();
+         double number = 0.0;
+         string[] parts = Array.Empty<string> ();
+         //Splitting the string into integral, fractional and exponent parts
+         parts = s.Trim ().ToLower ().Split (".");
+         string integer = parts[0];
+         string sign = (integer[0] == '-' || integer[0] == '+') ? integer[..1] : "";
+         integer = integer.TrimStart ('-', '+');
+         if (!integer.All (char.IsDigit) || integer.StartsWith ('e') || string.IsNullOrEmpty (integer)) throw new FormatException ();
+         //Calculating the integral part 
+         foreach (var digit in integer) {
+            number *= 10.0;
+            number += digit - '0';
+         }
+         string fraction = parts[1];
+         string exponentdigits = "";
+         char expsign = ' ';
+         int power = 0;
+         if (fraction.Contains ('e')) {
+            //Splitting exponent part from fractional part
+            exponentdigits = fraction[fraction.IndexOf ('e')..];
+            fraction = fraction.Remove (fraction.IndexOf ("e"), exponentdigits.Length);
+            if (!fraction.All (char.IsDigit) || fraction.StartsWith ('e') || string.IsNullOrEmpty (fraction)) throw new FormatException ();
+            int eindex = exponentdigits.IndexOf ('e');
+            if (exponentdigits[eindex + 1] == '-' || exponentdigits[eindex + 1] == '+' || char.IsDigit (exponentdigits[eindex + 1])) {
+               expsign = exponentdigits[eindex + 1];
+               exponentdigits = char.IsDigit (exponentdigits[eindex + 1]) ? exponentdigits.Remove (eindex, 1) : exponentdigits.Remove (eindex, 2);
+            }
+            //Calculating the exponent part
+            foreach (var digit in exponentdigits) {
+               power *= 10;
+               power += digit - '0';
+            }
+            if (expsign == '-') power = -power;
+         }
+         //Calculating the factorial part
+         double factor = 1.0;
+         foreach (var digit in fraction) {
+            factor *= 10.0;
+            number += (digit - '0') / factor;
+         }
+         if (sign == "-") number = -number;
+         double exponent = Math.Pow (10.0, power);
+         number *= exponent;
+         return number;
+      }
    }
 }
-class Mdouble {
-   public static double Parse (string s) {
-      if (s == null) throw new ArgumentNullException ();
-      //Regular Expressions(regex) class checks for pattern matching with the given string
-      Regex pattern = new (@"\s*(?<sign>[+-])?(?<integer>[0-9]+)(\.(?<fraction>[0-9]*))?([Ee](?<expsign>[+-])?(?<exponent>[0-9]+))?\s*",
-          //Explicitcapture, a member of regexoptions enum which is used to capture only explicitly named groups
-          RegexOptions.ExplicitCapture);
 
-      //Match property compares the given string with the pattern
-      //Match object comprises the result of the comparison
-      Match match = pattern.Match (s);
-
-      //Success, a property of match class indicates whether the pattern is successfully matched all the part of the string
-      if (!match.Success) throw new FormatException ();
-
-      //Value, a property of match class returns the matched substrings of match and captured groups
-      //Groups, also a property of match class groups the matched substrings
-      string sign = match.Groups["sign"].Value;
-      string integer = match.Groups["integer"].Value;
-      string fraction = match.Groups["fraction"].Value;
-      string expsign = match.Groups["expsign"].Value;
-      string exponentdigits = match.Groups["exponent"].Value;
-      double number = 0.0;
-
-      foreach (var digit in integer) {
-         number *= 10.0;
-         number += digit - '0';
-      }
-      double factor = 1.0;
-      foreach (var digit in fraction) {
-         factor *= 10.0;
-         number += (digit - '0') / factor;
-      }
-      if (sign == "-") number = -number;
-      int power = 0;
-      foreach (var digit in exponentdigits) {
-         power *= 10;
-         power += digit - '0';
-      }
-      if (expsign == "-") power = -power;
-      double exponent = Math.Pow (10.0, power);
-      number *= exponent;
-      return number;
-   }
-}
