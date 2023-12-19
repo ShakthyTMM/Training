@@ -14,6 +14,8 @@ Console.Write ($"Drive    : {drive}\nFolders  : ");
 foreach (var ch in folder) Console.Write ($"{ch}   ");
 Console.WriteLine ($"\nFile Name: {fname}\nExtension: {ext}");
 
+/// <summary>Parses a file name and returns the parts of the file name as a tuple</summary>
+/// State diagram reference: file://C:/Users/ranganathansh/Pictures/statediagram.jpg
 (char, string[], string, string) FileParse (string input) {
    State s = A;
    Action none = () => { };

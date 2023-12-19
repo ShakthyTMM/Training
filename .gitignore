@@ -9,9 +9,12 @@
 *.obj
 **/bin/
 */.vs/
+*/.Output/
+*/.html/
 **/.vs/
 */obj/
 **/obj/
+**/dotCover/
 *.cache
 *.vcxproj.user
 *.csproj.user
