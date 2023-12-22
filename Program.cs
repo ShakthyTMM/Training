@@ -75,9 +75,10 @@ internal class Program {
          if (s.Contains ('e')) {
             edigits = s[eindex..];
             int expindex = edigits.IndexOf ('e');
-            if (edigits[expindex + 1] is '+' or '-' || char.IsDigit (edigits[expindex + 1])) {
+            bool iDigit = char.IsDigit (edigits[expindex + 1]);
+            if (edigits[expindex + 1] is '+' or '-' || iDigit) {
                expsign = edigits[expindex + 1];
-               edigits = char.IsDigit (edigits[expindex + 1]) ? edigits.Remove (expindex, 1) : edigits.Remove (expindex, 2);
+               edigits = edigits.Remove (expindex, iDigit ? 1 : 2);
             }
 
             // Calculating the exponent part
@@ -92,10 +93,8 @@ internal class Program {
          number *= exponent;
          return number;
 
-         bool Error (string s) {
-            if (!s.All (char.IsDigit) || string.IsNullOrEmpty (s)) return true;
-            return false;
-         }
+         static bool Error (string s) => !s.All (char.IsDigit) || string.IsNullOrEmpty (s);
+
       }
    }
 }
