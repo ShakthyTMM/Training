@@ -29,7 +29,7 @@ namespace deque {
       /// <summary>Checks the given index for 1</summary>
       /// <param name="mIndex">Index to be checked</param>
       /// <returns>Returns the appropriate index value</returns>
-      public int Check(int mIndex)=> mIndex < 1 ? Capacity - 1 : (mIndex - 1) % Capacity;
+      public int Check (int mIndex) => mIndex < 1 ? Capacity - 1 : (mIndex - 1) % Capacity;
 
       /// <summary>Deletes an element from the front of the deque</summary>
       /// <returns>Returns the element to be deleted</returns>
@@ -37,7 +37,7 @@ namespace deque {
       public T DequeueFront () {
          if (IsEmpty) throw new InvalidOperationException ();
          T item = mArray[mFront];
-         mArray[mFront]=default;
+         mArray[mFront] = default;
          if (mFront == (mFront + mRear) % Capacity && mCount == 1) mFront = -1;
          mCount--;
          mFront = (mFront + 1) % Capacity;
@@ -49,7 +49,7 @@ namespace deque {
       /// <exception cref="InvalidOperationException"></exception>
       public T DequeueRear () {
          if (IsEmpty) throw new InvalidOperationException ();
-         mRear = Check(mRear);
+         mRear = Check (mRear);
          T item = mArray[mRear];
          mArray[mRear] = default;
          mCount--;
@@ -60,7 +60,7 @@ namespace deque {
       /// <param name="a">The value of the element to be added</param>
       public void EnqueueFront (T a) {
          if (IsFull) ResizeArray ();
-         mFront = Check(mFront);
+         mFront = Check (mFront);
          mArray[mFront] = a;
          mCount++;
       }
