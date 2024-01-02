@@ -4,59 +4,59 @@ namespace TestDeque {
    public class UnitTest1 {
 
       [TestMethod]
-      public void TestDequeue_front () {
-         for (int i = 0; i < 5; i++) mQueue.Enqueue_front (i);
-         mQueue.Dequeue_front ();
-         mQueue.Dequeue_front ();
+      public void TestDequeueFront () {
+         for (int i = 0; i < 5; i++) mQueue.EnqueueFront (i);
+         mQueue.DequeueFront ();
+         mQueue.DequeueFront ();
          Assert.AreEqual (3, mQueue.Count);
-         Assert.AreEqual (2, mQueue.Dequeue_front ());
-         mQueue.Dequeue_front ();
-         mQueue.Dequeue_front ();
-         Assert.ThrowsException<InvalidOperationException> (() => mQueue.Dequeue_front ());
+         Assert.AreEqual (2, mQueue.DequeueFront ());
+         mQueue.DequeueFront ();
+         mQueue.DequeueFront ();
+         Assert.ThrowsException<InvalidOperationException> (() => mQueue.DequeueFront ());
       }
 
       [TestMethod]
-      public void TestDequeue_rear () {
-         for (int i = 0; i < 5; i++) mQueue.Enqueue_rear (i);
-         mQueue.Dequeue_rear ();
-         mQueue.Dequeue_rear ();
+      public void TestDequeueRear () {
+         for (int i = 0; i < 5; i++) mQueue.EnqueueRear (i);
+         mQueue.DequeueRear ();
+         mQueue.DequeueRear ();
          Assert.AreEqual (3, mQueue.Count);
-         Assert.AreEqual (2, mQueue.Dequeue_rear ());
-         mQueue.Dequeue_rear ();
-         mQueue.Dequeue_rear ();
-         Assert.ThrowsException<InvalidOperationException> (() => mQueue.Dequeue_rear ());
+         Assert.AreEqual (2, mQueue.DequeueRear ());
+         mQueue.DequeueRear ();
+         mQueue.DequeueRear ();
+         Assert.ThrowsException<InvalidOperationException> (() => mQueue.DequeueRear ());
       }
 
       [TestMethod]
-      public void TestEnqueue_front () {
-         for (int i = 0; i < 5; i++) mQueue.Enqueue_front (i);
+      public void TestEnqueueFront () {
+         for (int i = 0; i < 5; i++) mQueue.EnqueueFront (i);
          Assert.AreEqual (5, mQueue.Count);
          Assert.AreEqual (8, mQueue.Capacity);
       }
 
       [TestMethod]
-      public void TestEnqueue_rear () {
-         for (int i = 0; i < 5; i++) mQueue.Enqueue_rear (i);
+      public void TestEnqueueRear () {
+         for (int i = 0; i < 5; i++) mQueue.EnqueueRear (i);
          Assert.AreEqual (5, mQueue.Count);
          Assert.AreEqual (8, mQueue.Capacity);
       }
 
       [TestMethod]
-      public void TestPeek_front () {
-         for (int i = 0; i < 5; i++) mQueue.Enqueue_front (i);
-         Assert.AreEqual (4, mQueue.Peek_front ());
-         for (int i = 0; i < 5; i++) mQueue.Dequeue_front ();
-         Assert.ThrowsException<InvalidOperationException> (() => mQueue.Peek_front ());
+      public void TestPeekFront () {
+         for (int i = 0; i < 5; i++) mQueue.EnqueueFront (i);
+         Assert.AreEqual (4, mQueue.PeekFront ());
+         for (int i = 0; i < 5; i++) mQueue.DequeueFront ();
+         Assert.ThrowsException<InvalidOperationException> (() => mQueue.PeekFront ());
       }
 
       [TestMethod]
-      public void TestPeek_rear () {
-         for (int i = 0; i < 5; i++) mQueue.Enqueue_rear (i);
-         Assert.AreEqual (4, mQueue.Peek_rear ());
-         for (int i = 0; i < 5; i++) mQueue.Dequeue_rear ();
-         Assert.ThrowsException<InvalidOperationException> (() => mQueue.Peek_rear ());
+      public void TestPeekRear () {
+         for (int i = 0; i < 5; i++) mQueue.EnqueueRear (i);
+         Assert.AreEqual (4, mQueue.PeekRear ());
+         for (int i = 0; i < 5; i++) mQueue.DequeueRear ();
+         Assert.ThrowsException<InvalidOperationException> (() => mQueue.PeekRear ());
       }
 
-      TQueue<int> mQueue = new ();
+      TDeque<int> mQueue = new ();
    }
 }
