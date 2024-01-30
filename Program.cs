@@ -26,12 +26,12 @@ class Wordle {
       }
       SetCursorPosition ((WindowWidth - 21) / 2, CursorTop += 4);
       WriteLine ("Press Any key to exit");
-      var key1 = ReadKey (true);
+      _ = ReadKey (true);
    }
    #region Implementation ----------------------------------------
    /// <summary>Selects a random word as the secret word from the text file</summary>
    void SelectWord () {
-      var puzzles = File.ReadAllLines ("C:/Users/ranganathansh/Downloads/puzzle-5.txt");
+      var puzzles = File.ReadAllLines ("C:/etc/puzzle-5.txt");
       secretWord = puzzles[new Random ().Next (puzzles.Length)];
    }
 
@@ -89,6 +89,7 @@ class Wordle {
          }
       }
       if (Key.Key == ConsoleKey.LeftArrow || Key.Key == ConsoleKey.Backspace) {
+         if (string.IsNullOrEmpty (word)) return;
          word = word[..(c - 1)];
          if (c == 5) grid[r, --c] = '\u25cc';
          else {
@@ -97,15 +98,7 @@ class Wordle {
          }
       }
       if (c == 5 && Key.Key == ConsoleKey.Enter) {
-         if (r == 5) {
-            GameOver = true;
-            (string res, ConsoleColor colour) = word == secretWord
-                                             ? ($"You found the word in {r + 1} tries", ConsoleColor.Green)
-                                             : ($"Sorry - the word was {secretWord}", ConsoleColor.Yellow);
-            PrintMessage (res, colour);
-            return;
-         }
-         var words = File.ReadAllLines ("C:/Users/ranganathansh/Downloads/dict-5.txt");
+         var words = File.ReadAllLines ("C:/etc/dict-5.txt");
          c = 0;
          if (words.Contains (word)) {
             LetterColors (letterColors);
@@ -119,6 +112,14 @@ class Wordle {
                grid[r, j] = j == 0 ? '\u25cc' : '\u00b7';
             PrintMessage ($"{word} is not a word", ConsoleColor.Yellow);
             word = "";
+            return;
+         }
+         if (r == 5) {
+            GameOver = true;
+            (string res, ConsoleColor colour) = word == secretWord
+                                             ? ($"You found the word in {r + 1} tries", ConsoleColor.Green)
+                                             : ($"Sorry - the word was {secretWord}", ConsoleColor.Yellow);
+            PrintMessage (res, colour);
             return;
          }
          grid[r + 1, c] = '\u25cc';
