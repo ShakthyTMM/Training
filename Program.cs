@@ -9,6 +9,7 @@
 #region Program ---------------------------------------------------------------------------------------- 
 using System.Text;
 using static System.Console;
+
 Wordle s = new ();
 s.Run ();
 
@@ -18,37 +19,39 @@ class Wordle {
       CursorVisible = false;
       SelectWord ();
       DisplayBoard ();
-      while (!GameOver) {
-         key = ReadKey (true);
-         UpdateGameState (key);
+      while (!mGameOver) {
+         mKey = ReadKey (true);
+         UpdateGameState (mKey);
          DisplayBoard ();
-         if (c == 0) Clear ();
+         if (mCol == 0) Clear ();
       }
       SetCursorPosition ((WindowWidth - 21) / 2, CursorTop += 4);
       WriteLine ("Press Any key to exit");
       _ = ReadKey (true);
    }
+
    #region Implementation ----------------------------------------
    /// <summary>Selects a random word as the secret word from the text file</summary>
    void SelectWord () {
+      mWords = File.ReadAllLines ("C:/etc/dict-5.txt");
       var puzzles = File.ReadAllLines ("C:/etc/puzzle-5.txt");
-      secretWord = puzzles[new Random ().Next (puzzles.Length)];
+      mSecretWord = puzzles[new Random ().Next (puzzles.Length)];
    }
 
    /// <summary>Displays the layout of the game</summary>
    void DisplayBoard () {
       OutputEncoding = new UnicodeEncoding ();
       int x;
-      SetCursorPosition ((WindowWidth - 15) / 2, r);
+      SetCursorPosition ((WindowWidth - 15) / 2, mRow);
       (x, _) = GetCursorPosition ();
-      for (int i = r; i < 6; i++) {
+      for (int i = mRow; i < 6; i++) {
          for (int j = 0; j < 5; j++) {
-            if (!(char.IsLetter (grid[i, j])) && i == 0 && j == 0) grid[i, j] = '\u25cc';
-            grid[i, j] = (char.IsLetter (grid[i, j]) || grid[i, j] == '\u25cc') ? grid[i, j] : '\u00b7';
-            if (char.IsLetter (grid[i, j]) && word.Length == 5 && key.Key == ConsoleKey.Enter)
-               ForegroundColor = letterColors.TryGetValue (grid[i, j], out ConsoleColor value) && !word[..j].Contains (word[j])
+            if (!(char.IsLetter (mGrid[i, j])) && i == 0 && j == 0) mGrid[i, j] = '\u25cc';
+            mGrid[i, j] = (char.IsLetter (mGrid[i, j]) || mGrid[i, j] == '\u25cc') ? mGrid[i, j] : '\u00b7';
+            if (char.IsLetter (mGrid[i, j]) && mWord.Length == 5 && mKey.Key == ConsoleKey.Enter)
+               ForegroundColor = mLetterColors.TryGetValue (mGrid[i, j], out ConsoleColor value) && !mWord[..j].Contains (mWord[j])
                                ? value : ConsoleColor.DarkGray;
-            Write ($" {grid[i, j]} ");
+            Write ($" {mGrid[i, j]} ");
             ResetColor ();
          }
          WriteLine ();
@@ -62,10 +65,9 @@ class Wordle {
       int count = 0;
       for (char alpha = 'A'; alpha <= 'Z'; alpha++) {
          count++;
-         if (alpha == 'A' && key.Key == ConsoleKey.Enter) {
-            LetterColors (keyColors);
-         }
-         if (keyColors.ContainsKey (alpha)) ForegroundColor = keyColors[alpha];
+         if (alpha == 'A' && mKey.Key == ConsoleKey.Enter)
+            LetterColors (mKeyColors);
+         if (mKeyColors.TryGetValue (alpha, out ConsoleColor value)) ForegroundColor = value;
          if (count % 7 == 0) {
             Write ($"{alpha}\n");
             ResetColor ();
@@ -81,58 +83,57 @@ class Wordle {
    /// <param name="Key">Entry given by the player</param>
    void UpdateGameState (ConsoleKeyInfo Key) {
       if (char.IsLetter (Key.KeyChar)) {
-         if (c < 5) {
-            grid[r, c] = Char.ToUpper (Key.KeyChar);
-            word += grid[r, c];
-            if (c < 4) grid[r, ++c] = '\u25cc';
-            else ++c;
+         if (mCol < 5) {
+            mGrid[mRow, mCol] = Char.ToUpper (Key.KeyChar);
+            mWord += mGrid[mRow, mCol];
+            if (mCol < 4) mGrid[mRow, ++mCol] = '\u25cc';
+            else ++mCol;
          }
       }
       if (Key.Key == ConsoleKey.LeftArrow || Key.Key == ConsoleKey.Backspace) {
-         if (string.IsNullOrEmpty (word)) return;
-         word = word[..(c - 1)];
-         if (c == 5) grid[r, --c] = '\u25cc';
+         if (string.IsNullOrEmpty (mWord)) return;
+         mWord = mWord[..(mCol - 1)];
+         if (mCol == 5) mGrid[mRow, --mCol] = '\u25cc';
          else {
-            grid[r, --c] = '\u25cc';
-            grid[r, c + 1] = '\u00b7';
+            mGrid[mRow, --mCol] = '\u25cc';
+            mGrid[mRow, mCol + 1] = '\u00b7';
          }
       }
-      if (c == 5 && Key.Key == ConsoleKey.Enter) {
-         var words = File.ReadAllLines ("C:/etc/dict-5.txt");
-         c = 0;
-         if (words.Contains (word)) {
-            LetterColors (letterColors);
-            if (word == secretWord) {
-               GameOver = true;
-               PrintMessage ($"You found the word in {r + 1} tries", ConsoleColor.Green);
+      if (mCol == 5 && Key.Key == ConsoleKey.Enter) {
+         mCol = 0;
+         if (mWords.Contains (mWord)) {
+            LetterColors (mLetterColors);
+            if (mWord == mSecretWord) {
+               mGameOver = true;
+               PrintMessage ($"You found the word in {mRow + 1} tries", ConsoleColor.Green);
                return;
             }
          } else {
             for (int j = 0; j < 5; j++)
-               grid[r, j] = j == 0 ? '\u25cc' : '\u00b7';
-            PrintMessage ($"{word} is not a word", ConsoleColor.Yellow);
-            word = "";
+               mGrid[mRow, j] = j == 0 ? '\u25cc' : '\u00b7';
+            PrintMessage ($"{mWord} is not a word", ConsoleColor.Yellow);
+            mWord = "";
             return;
          }
-         if (r == 5) {
-            GameOver = true;
-            (string res, ConsoleColor colour) = word == secretWord
-                                             ? ($"You found the word in {r + 1} tries", ConsoleColor.Green)
-                                             : ($"Sorry - the word was {secretWord}", ConsoleColor.Yellow);
+         if (mRow == 5) {
+            mGameOver = true;
+            (string res, ConsoleColor colour) = mWord == mSecretWord
+                                             ? ($"You found the word in {mRow + 1} tries", ConsoleColor.Green)
+                                             : ($"Sorry - the word was {mSecretWord}", ConsoleColor.Yellow);
             PrintMessage (res, colour);
             return;
          }
-         grid[r + 1, c] = '\u25cc';
+         mGrid[mRow + 1, mCol] = '\u25cc';
          DisplayBoard ();
-         r++;
-         PrintMessage ($" {6 - r} tries remaining ", ConsoleColor.Yellow);
+         mRow++;
+         PrintMessage ($" {6 - mRow} tries remaining ", ConsoleColor.Yellow);
       }
    }
 
    /// <summary>Clears the dictionary for each word</summary>
    void Clear () {
-      word = "";
-      letterColors.Clear ();
+      mWord = "";
+      mLetterColors.Clear ();
    }
 
    /// <summary>Prints the message based on the state of the game</summary>
@@ -148,20 +149,22 @@ class Wordle {
    /// <summary>Updates the given dictionaries with entries and corresponding colour</summary>
    /// <param name="color">Dictionary to be updated</param>
    void LetterColors (Dictionary<char, ConsoleColor> color) {
-      for (int j = 0; j < word.Length; j++) {
-         if (color.TryGetValue (word[j], out ConsoleColor value) && value is ConsoleColor.Green or ConsoleColor.Blue) continue;
-         color[word[j]] = secretWord.Contains (word[j]) ? (word[j] == secretWord[j]
+      for (int j = 0; j < mWord.Length; j++) {
+         if (color.TryGetValue (mWord[j], out ConsoleColor value) && value is ConsoleColor.Green or ConsoleColor.Blue) continue;
+         color[mWord[j]] = mSecretWord.Contains (mWord[j]) ? (mWord[j] == mSecretWord[j]
                              ? ConsoleColor.Green : ConsoleColor.Blue) : ConsoleColor.DarkGray;
       }
    }
    #endregion
+
    #region Private data ------------------------------------------
-   ConsoleKeyInfo key;
-   Dictionary<char, ConsoleColor> letterColors = new (), keyColors = new ();
-   string word = "", secretWord = "";
-   bool GameOver = false;
-   int r, c;
-   char[,] grid = new char[6, 5];
+   ConsoleKeyInfo mKey;
+   Dictionary<char, ConsoleColor> mLetterColors = new (), mKeyColors = new ();
+   string[] mWords;
+   string mWord, mSecretWord;
+   bool mGameOver = false;
+   int mRow, mCol;
+   char[,] mGrid = new char[6, 5];
    #endregion
 }
 #endregion
