@@ -6,12 +6,13 @@
 // Wordle
 // To implement wordle game
 // ----------------------------------------------------------------------------------------
-#region Program ---------------------------------------------------------------------------------------- 
+
 using System.Reflection;
 using static System.Console;
 using static System.ConsoleColor;
 
 namespace WordleGame {
+   #region Wordle ----------------------------------------------------------------------------------------
    public class Wordle {
       // Interface ---------------------------------
       // Public interface routine to run the game
@@ -28,7 +29,8 @@ namespace WordleGame {
       }
 
       #region Implementation ----------------------------------------
-      // Implementation ----------------------------
+      public string SecretWord { get; set; }    // Holds the secret word
+
       // Set up suitable colors and clear the screen
       void ClearScreen () {
          BackgroundColor = Black;
@@ -42,7 +44,8 @@ namespace WordleGame {
       // Select a word at random 
       public void SelectWord () {
          mDict = LoadStrings ("dict-5.txt");
-         mWord = "CHAIN";
+         var puzzle = LoadStrings ("puzzle-5.txt");
+         SecretWord = puzzle[new Random ().Next (puzzle.Length)];
       }
 
       // Display the current state of the board
@@ -54,13 +57,13 @@ namespace WordleGame {
                ConsoleColor color = White;
                if (y < mY) {
                   color = DarkGray;
-                  if (mWord[x] == ch) color = Green;
-                  else if (mWord.Contains (ch)) color = Blue;
+                  if (SecretWord[x] == ch) color = Green;
+                  else if (SecretWord.Contains (ch)) color = Blue;
                }
                if (ch == ' ') ch = '\u00b7';
                if (x == mX && y == mY) ch = '\u25cc';
                if (!IsTest) Put (x * 3 + GRIDX, y * 2 + GRIDY, color, ch);
-               Save (ch, color, "Letter");
+               else Save (ch, color, "Letter");
             }
 
          // Then, add the 'keyboard hint display' - this shows the keys 
@@ -72,13 +75,13 @@ namespace WordleGame {
             char ch = (char)('A' + i);
             ConsoleColor color = White;                                 // Not yet used
             if (mGuess.Take (mY).Any (a => a.Contains (ch))) color = DarkGray;    // Already used
-            if (recent.Contains (ch) && mWord.Contains (ch)) {
+            if (recent.Contains (ch) && SecretWord.Contains (ch)) {
                color = Blue;     // Used in an incorrect position in the recent guess
-               int a = recent.IndexOf (ch), b = mWord.IndexOf (ch);
+               int a = recent.IndexOf (ch), b = SecretWord.IndexOf (ch);
                if (a == b) color = Green;
             }
             if (!IsTest) Put (x * 5 + KBDX, y * 1 + KBDY, color, ch);
-            Save (ch, color, "keys");
+            else Save (ch, color, "keys");
          }
 
          // If the user has recently typed in a word that is not in the
@@ -112,7 +115,7 @@ namespace WordleGame {
                return;
             }
             mX = 0;
-            if (mGuess[mY++] == mWord) {
+            if (mGuess[mY++] == SecretWord) {
                mSucceeded = true;
             } else if (mY == 6) mFailed = true;
             return;
@@ -165,7 +168,7 @@ namespace WordleGame {
          if (mSucceeded)
             Put (WindowWidth / 2 - 15, RESULTY + 2, Green, $"You found the word in {mY} tries");
          else
-            Put (WindowWidth / 2 - 13, RESULTY + 2, Yellow, $"Sorry - the word was {mWord}");
+            Put (WindowWidth / 2 - 13, RESULTY + 2, Yellow, $"Sorry - the word was {SecretWord}");
          Put (WindowWidth / 2 - 11, RESULTY + 4, White, "Press any key to quit");
          ReadKey ();
          WriteLine ();
@@ -201,7 +204,6 @@ namespace WordleGame {
       // State -------------------------------------
       string[] mDict;   // The dictionary of all possible words
       string[] mGuess = { "     ", "     ", "     ", "     ", "     ", "     " };   // The 6 guesses of the user
-      string mWord;
       int mY = 0;       // The word we're typing into now
       int mX = 0;       // The letter within that word we're typing in
       string mBadWord;  // This is set if the user types in a word not in the dictionary

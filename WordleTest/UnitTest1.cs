@@ -2,11 +2,11 @@ using WordleGame;
 namespace WordleTest {
    [TestClass]
    public class UnitTest1 {
-
       /// <summary>Tests the wordle implementation</summary>
       [TestMethod]
       public void WordleTest () {
          mW.SelectWord ();
+         mW.SecretWord = "CHAIN";
          foreach (var tries in mInputs) {
             foreach (var word in tries) {
                foreach (var ch in word)
@@ -20,7 +20,7 @@ namespace WordleTest {
       }
 
       Wordle mW = new ();
-      List<string[]> mInputs = new (){new string[] { "APPLE", "LEARN", "TRAIN", "CHAIR", "PEARL", "CHAIN" },
+      List<string[]> mInputs = new () { new string[] { "APPLE", "LEARN", "TRAIN", "CHAIR", "PEARL", "CHAIN" },
                                      new string[] { "APPLE", "CHAIR", "PEARL", "CHAIN" },
                                      new string[] { "CHAIR", "PEARL", "CHAIN" } };
    }
