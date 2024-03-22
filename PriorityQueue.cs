@@ -28,7 +28,7 @@ public class PriorityQueue<T> where T : IComparable<T> {
       if (IsEmpty) throw new InvalidOperationException ();
       if (mList.Count == 2) { T element = mList[1]; mList.Remove (mList[1]); return element; }
       (mList[^1], mList[1]) = (mList[1], mList[^1]);
-      T item = mList[^1]; mList.Remove (mList[^1]);
+      T item = mList[^1]; mList.RemoveAt (mList.Count - 1);
       SiftDown (mList[1]);
       return item;
    }
@@ -37,7 +37,8 @@ public class PriorityQueue<T> where T : IComparable<T> {
    /// <exception cref="InvalidOperationException"></exception>
    public void Display () {
       if (IsEmpty) throw new InvalidOperationException ();
-      for (int i = 1; i < mList.Count; i++) Console.WriteLine (mList[i]);
+      for (int i = 1; i < mList.Count; i++) Console.Write ($"  {mList[i]}  ");
+      Console.WriteLine ();
    }
 
    /// <summary>Adds elements to the priority queue</summary>
@@ -48,8 +49,9 @@ public class PriorityQueue<T> where T : IComparable<T> {
    // (thereby moving it down) until it is lesser than both of its childern.
    void SiftDown (T value) {
       mIndex = mList.IndexOf (value);
-      if (mIndex * 2 > mList.Count - 1) return;
-      mLeft = mIndex * 2; mRight = mLeft + 1;
+      mLeft = mIndex * 2;
+      if (mLeft > mList.Count - 1) return;
+      mRight = mLeft + 1;
       if (mRight <= mList.Count - 1) {
          if (mList[mLeft].CompareTo (mList[mIndex]) >= 0 && mList[mRight].CompareTo (mList[mIndex]) >= 0) return;
          int smallChild = (mList[mLeft].CompareTo (mList[mRight]) >= 0) ? mRight : mLeft;
@@ -65,10 +67,11 @@ public class PriorityQueue<T> where T : IComparable<T> {
    // Swaps a node that is lesser than its parent (thereby moving it up)
    // until it is no lesser than the node above it.
    void SiftUp (T value) {
-      mIndex = mList.IndexOf (value);
-      if (mList[mIndex].CompareTo (mList[mIndex / 2]) >= 0) return;
+      mIndex = mList.LastIndexOf (value);
+      int parent = mIndex / 2;
+      if (mList[mIndex].CompareTo (mList[parent]) >= 0) return;
       else {
-         (mList[mIndex], mList[mIndex / 2]) = (mList[mIndex / 2], mList[mIndex]);
+         (mList[mIndex], mList[parent]) = (mList[parent], mList[mIndex]);
          SiftUp (value);
       }
    }
@@ -80,4 +83,6 @@ public class PriorityQueue<T> where T : IComparable<T> {
    #endregion
 }
 #endregion
-class Program { static void Main () { } }
+class Program {
+   static void Main () { }
+}
