@@ -29,7 +29,7 @@ public class PriorityQueue<T> where T : IComparable<T> {
       if (mList.Count == 2) { T element = mList[1]; mList.Remove (mList[1]); return element; }
       (mList[^1], mList[1]) = (mList[1], mList[^1]);
       T item = mList[^1]; mList.RemoveAt (mList.Count - 1);
-      SiftDown (mList[1]);
+      SiftDown (1);
       return item;
    }
 
@@ -47,19 +47,20 @@ public class PriorityQueue<T> where T : IComparable<T> {
 
    // Swaps a node that is larger then its childern with the smallest of its childern
    // (thereby moving it down) until it is lesser than both of its childern.
-   void SiftDown (T value) {
-      mIndex = mList.IndexOf (value);
-      mLeft = mIndex * 2;
+   void SiftDown (int index) {
+      mLeft = index * 2;
       if (mLeft > mList.Count - 1) return;
+      var left = mList[mLeft]; var parent = mList[index];
       mRight = mLeft + 1;
       if (mRight <= mList.Count - 1) {
-         if (mList[mLeft].CompareTo (mList[mIndex]) >= 0 && mList[mRight].CompareTo (mList[mIndex]) >= 0) return;
-         int smallChild = (mList[mLeft].CompareTo (mList[mRight]) >= 0) ? mRight : mLeft;
-         (mList[mIndex], mList[smallChild]) = (mList[smallChild], mList[mIndex]);
-         SiftDown (value);
+         var right = mList[mRight];
+         if (left.CompareTo (parent) >= 0 && right.CompareTo (parent) >= 0) return;
+         int smallChild = (left.CompareTo (right) >= 0) ? mRight : mLeft;
+         (mList[index], mList[smallChild]) = (mList[smallChild], mList[index]);
+         SiftDown (smallChild);
       } else {
-         if (mList[mLeft].CompareTo (mList[mIndex]) >= 0) return;
-         (mList[mIndex], mList[mLeft]) = (mList[mLeft], mList[mIndex]);
+         if (left.CompareTo (parent) >= 0) return;
+         (mList[index], mList[mLeft]) = (mList[mLeft], mList[index]);
       }
    }
    int mLeft, mRight;   // Left and right child of the node
@@ -68,18 +69,45 @@ public class PriorityQueue<T> where T : IComparable<T> {
    // until it is no lesser than the node above it.
    void SiftUp (T value) {
       mIndex = mList.LastIndexOf (value);
-      int parent = mIndex / 2;
-      if (mList[mIndex].CompareTo (mList[parent]) >= 0) return;
+      mParent = mIndex / 2; var parent = mList[mParent];
+      if (value.CompareTo (parent) >= 0) return;
       else {
-         (mList[mIndex], mList[parent]) = (mList[parent], mList[mIndex]);
+         (mList[mIndex], mList[mParent]) = (mList[mParent], mList[mIndex]);
          SiftUp (value);
       }
    }
+   int mIndex, mParent;    // Parent and child node
    #endregion
 
    #region Private data ----------------------------------------------------
    List<T> mList;    // Underlying data structure which stores the data of priority queue
-   int mIndex;    // Index of the element in use
+   #endregion
+}
+#endregion
+
+#region class TestQueue --------------------------------------------------------------------------------------------
+// Priority Queue's other implementation which is always correct and
+// used for testing purpose
+public class TestQueue<T> {
+   #region Constructor -----------------------------------------------------
+   public TestQueue () { mList = new List<T> { default }; }
+   #endregion
+
+   #region Implementation --------------------------------------------------
+   public bool IsEmpty { get { return mList.Count == 1; } }
+
+   public void Enqueue (T value) => mList.Add (value);
+
+   public T Dequeue () {
+      if (IsEmpty) throw new InvalidOperationException ();
+      mList.Sort ();
+      T item = mList[1]; mList.Remove (item);
+      return item;
+   }
+   #endregion
+
+   #region Private data ----------------------------------------------------
+   List<T> mList;
    #endregion
 }
 #endregion
