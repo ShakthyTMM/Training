@@ -22,8 +22,10 @@ public class PriorityQueue<T> where T : IComparable<T> {
    /// <summary>Checks whether the priority queue is empty</summary>
    public bool IsEmpty => Count == 1;
 
-   // Gets the elements of the priority queue (for testing purpose)
-   public List<T> List { get { var temp = mList; temp.RemoveAt (0); return temp; } }
+   /// <summary>Checks if the given list and priority queue are equal</summary>
+   /// <param name="data"></param>
+   /// <returns></returns>
+   public bool AreSequenceEqual (List<T> data) => data.SequenceEqual (mList);
 
    /// <summary>Deletes an element from the priority queue</summary>
    /// <returns>Returns the deleted element</returns>
@@ -40,7 +42,7 @@ public class PriorityQueue<T> where T : IComparable<T> {
    /// <exception cref="InvalidOperationException"></exception>
    public void Display () {
       if (IsEmpty) throw new InvalidOperationException ();
-      for (int i = 1; i < Count; i++) Write ($"  {mList[i]}  ");
+      for (int i = 1; i < Count; i++) Write ($" {mList[i]},");
       WriteLine ();
    }
 
@@ -94,10 +96,16 @@ public class TestQueue<T> {
    #endregion
 
    #region Implementation --------------------------------------------------
+   /// <summary>Checks whether the queue is empty</summary>
    public bool IsEmpty => mList.Count == 1;
 
+   /// <summary>Adds elements to the queue</summary>
+   /// <param name="value">Value to be added</param>
    public void Enqueue (T value) => mList.Add (value);
 
+   /// <summary>Deletes an element from the queue</summary>
+   /// <returns>Returns the deleted element</returns>
+   /// <exception cref="InvalidOperationException"></exception>
    public T Dequeue () {
       if (IsEmpty) throw new InvalidOperationException ();
       mList.Sort ();
