@@ -13,6 +13,8 @@
 */obj/
 **/obj/
 *.cache
+*.html
+*.Output
 *.vcxproj.user
 *.csproj.user
 **/launchSettings.json

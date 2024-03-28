@@ -4,11 +4,38 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="dotCover.Output\**" />
+    <Compile Remove="PriorityQueue test\**" />
+    <Compile Remove="Queue\**" />
+    <Compile Remove="TestDeque\**" />
+    <Compile Remove="TestList\**" />
+    <Compile Remove="TestProject1\**" />
+    <Compile Remove="TestQueue\**" />
+    <Compile Remove="WordleTest\**" />
+    <EmbeddedResource Remove="dotCover.Output\**" />
+    <EmbeddedResource Remove="PriorityQueue test\**" />
+    <EmbeddedResource Remove="Queue\**" />
+    <EmbeddedResource Remove="TestDeque\**" />
+    <EmbeddedResource Remove="TestList\**" />
+    <EmbeddedResource Remove="TestProject1\**" />
+    <EmbeddedResource Remove="TestQueue\**" />
+    <EmbeddedResource Remove="WordleTest\**" />
+    <None Remove="dotCover.Output\**" />
+    <None Remove="PriorityQueue test\**" />
+    <None Remove="Queue\**" />
+    <None Remove="TestDeque\**" />
+    <None Remove="TestList\**" />
+    <None Remove="TestProject1\**" />
+    <None Remove="TestQueue\**" />
+    <None Remove="WordleTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove=".gitignore" />
+    <None Remove="dotCover.Output.html" />
   </ItemGroup>
 
 </Project>
