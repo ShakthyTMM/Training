@@ -1,7 +1,6 @@
 using PriorityQueue;
-using System;
-
 namespace PriorityQueue_Test;
+
 [TestClass]
 public class UnitTest1 {
    /// <summary>Tests the operations of the priority queue</summary>
@@ -19,11 +18,12 @@ public class UnitTest1 {
       };
 
       for (int listidx = 0; listidx < data.Count; listidx++) {
-         foreach (var value in data[listidx]) {
+         var list = data[listidx];
+         foreach (var value in list) {
             PQ.Enqueue (value); dumbQueue.Enqueue (value);
          }
          Assert.IsTrue (PQ.AreSequenceEqual (enqueueOrder[listidx]));
-         foreach (var _ in data[listidx]) Assert.AreEqual (PQ.Dequeue (), dumbQueue.Dequeue ());    // Checks dequeue
+         foreach (var _ in list) Assert.AreEqual (PQ.Dequeue (), dumbQueue.Dequeue ());    // Checks dequeue
       }
    }
 }

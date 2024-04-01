@@ -7,7 +7,6 @@
 // To implement a PriorityQueue<T> using the heap data structure
 // ----------------------------------------------------------------------------------------
 namespace PriorityQueue;
-using static System.Console;
 
 #region class PriorityQueue ----------------------------------------------------------------------------------------
 public class PriorityQueue<T> where T : IComparable<T> {
@@ -22,9 +21,7 @@ public class PriorityQueue<T> where T : IComparable<T> {
    /// <summary>Checks whether the priority queue is empty</summary>
    public bool IsEmpty => Count == 1;
 
-   /// <summary>Checks if the given list and priority queue are equal</summary>
-   /// <param name="data"></param>
-   /// <returns></returns>
+   /// <summary>Returns true if the given list and priority queue are equal</summary>
    public bool AreSequenceEqual (List<T> data) => data.SequenceEqual (mList);
 
    /// <summary>Deletes an element from the priority queue</summary>
@@ -38,16 +35,7 @@ public class PriorityQueue<T> where T : IComparable<T> {
       return item;
    }
 
-   /// <summary>Displays the elements of the priority queue</summary>
-   /// <exception cref="InvalidOperationException"></exception>
-   public void Display () {
-      if (IsEmpty) throw new InvalidOperationException ();
-      for (int i = 1; i < Count; i++) Write ($" {mList[i]},");
-      WriteLine ();
-   }
-
    /// <summary>Adds elements to the priority queue</summary>
-   /// <param name="value">Value to be added</param>
    public void Enqueue (T value) { mList.Add (value); SiftUp (Count - 1); }
 
    // Swaps a node that is larger than its childern with the smallest of its childern
@@ -100,7 +88,6 @@ public class TestQueue<T> {
    public bool IsEmpty => mList.Count == 1;
 
    /// <summary>Adds elements to the queue</summary>
-   /// <param name="value">Value to be added</param>
    public void Enqueue (T value) => mList.Add (value);
 
    /// <summary>Deletes an element from the queue</summary>
